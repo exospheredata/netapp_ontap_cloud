@@ -9,16 +9,5 @@ source 'https://rubygems.org'
 gem 'berkshelf'
 
 group :test do
-  gem 'chefspec'
-  gem 'community_cookbook_releaser'
-  gem 'cookstyle'
-  gem 'foodcritic'
-  gem 'inspec'
-  gem 'kitchen-inspec'
-  gem 'kitchen-vagrant'
-  gem 'rake'
-  gem 'stove'
-  gem 'test-kitchen'
   gem 'tomlrb'
-  gem 'winrm-elevated', '~> 1.0'
 end

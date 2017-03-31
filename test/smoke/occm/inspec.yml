@@ -1,0 +1,8 @@
+name: OnCommand Cloud Manager
+title: Compliance and Audit validation for NetApp OnCommand Cloud Manager configuration and setup
+maintainer: Exosphere Data, Inc
+copyright: Exosphere Data, Inc
+copyright_email: chef@exospheredata.com
+license: All Rights Reserved
+summary: Compliance and Audit validation for NetApp OnCommand Cloud Manager
+version: 0.1.0

@@ -1,9 +1,18 @@
 ---
 driver:
   name: vagrant
+  gui: false
+  customize:
+    cpus: 2
+    memory: 4096
+  ssh:
+    pty: true
 
 provisioner:
   name: chef_zero
+  # You many wish to test your CHEF::Log.<level> messages while using test-kitchen.  Change the below
+  # value to the level of choice.  For cleaner output, comment this option out.
+  # log_level: info
   # You may wish to disable always updating cookbooks in CI or other testing environments.
   # For example:
   #   always_update_cookbooks: <%= !ENV['CI'] %>
@@ -13,13 +22,14 @@ verifier:
   name: inspec
 
 platforms:
-  - name: centos-7.1
+  - name: centos-7.2
 
 suites:
   - name: default
     run_list:
-      - recipe[netapp_ontap_cloud::default]
+      - recipe[netapp_ontap_cloud::occm_install]
     verifier:
       inspec_tests:
-        - test/smoke/default
+        - test/smoke/occm
     attributes:
+
