@@ -10,4 +10,5 @@ gem 'berkshelf'
 
 group :test do
   gem 'tomlrb'
+  gem 'webmock'
 end

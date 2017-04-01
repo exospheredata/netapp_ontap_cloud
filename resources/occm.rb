@@ -51,12 +51,14 @@ property :cost_center, String
 action :setup do
   # Ensure that this host has OnCommand Cloud Manager up and running.  If recently started then
   # we need to wait for the service to respond.
-  server_responding?(new_resource.server, 5)
+  server_responding?(new_resource.server, 1)
   return new_resource.updated_by_last_action(false) if server_configured?(new_resource.server)
+  raise ArgumentError, 'AWS Secret Key set with no valid aws_key' if new_resource.aws_secret && (new_resource.aws_key.nil? || new_resource.aws_key == '')
+  raise ArgumentError, 'AWS Access Key set with no valid aws_secret' if new_resource.aws_key && (new_resource.aws_secret.nil? || new_resource.aws_secret == '')
   Chef::Log.info('Starting OnCommand Cloud Manager setup')
   payload = {}
   user_request = {}
-  user_request['email'] = new_resource.email_address || 'admin@localhost.lab'
+  user_request['email'] = new_resource.email_address
   user_request['lastName'] = new_resource.last_name || 'admin'
   user_request['firstName'] = new_resource.first_name || 'occm'
   user_request['password'] = new_resource.password
@@ -68,34 +70,28 @@ action :setup do
   end
   tenant_request = {}
   tenant_request['name'] = new_resource.tenant_name || 'Default Tenant'
-  tenant_request['description'] = ''
-  tenant_request['costCenter'] = ''
+  tenant_request['description'] = new_resource.description || ''
+  tenant_request['costCenter'] = new_resource.cost_center || ''
   payload['userRequest'] = user_request
   payload['tenantRequest'] = tenant_request
   payload['site'] = new_resource.site || 'ONTAP Cloud Lab'
   payload['company'] = new_resource.company
   payload['proxyUrl'] = { 'uri' => '' }
 
-  begin
-    response = setup_server(new_resource.server, payload)
-  rescue Timeout::Error => e
-    Chef::Log.info(e.message)
-    raise "Here: #{e.message}"
+  response = setup_server(new_resource.server, payload)
+
+  output = JSON.parse(response.body)
+  return new_resource.updated_by_last_action(false) if output['message'] == 'Initial setup already performed'
+  case response
+  when Net::HTTPOK
+    Chef::Log.info('OnCommand Cloud Manager setup complete')
+  when Net::HTTPBadRequest
+    raise ArgumentError, "OCCM Setup command returned an http error 400: #{output['message']} - #{output['violations']}"
+  when Net::HTTPClientError,
+        Net::HTTPInternalServerError
+    raise "Unknown OCCM Server error: #{response.body.inspect}"
   else
-    output = JSON.parse(response.body)
-    return new_resource.updated_by_last_action(false) if output['message'] == 'Initial setup already performed'
-    case response
-    when Net::HTTPOK
-      Chef::Log.info(response.body)
-    when Net::HTTPBadRequest
-      raise ArgumentError, "OCCM Setup command returned an http error 400: #{output['message']} - #{output['violations']}"
-    when Net::HTTPClientError,
-          Net::HTTPInternalServerError
-      Chef::Log.warn(response.inspect)
-      raise response.body.inspect
-    else
-      raise response.inspect
-    end
+    raise response.inspect
   end
 
   # After configuring the OnCommand Cloud Manager setup and first-run, we need to wait for the service
@@ -135,8 +131,8 @@ action_class do
           sleep(5)
           step_count += 1
         else
-          Chef::Log.fatal('The Service never returned despite waiting patiently')
-          return false
+          Chef::Log.debug('Failed to wait for the server connection')
+          raise 'The Service never returned despite waiting patiently'
         end
       else
         # In theory, we should only hit this point if the OnCommand Cloud Manager service

@@ -25,7 +25,7 @@ platforms:
   - name: centos-7.2
 
 suites:
-  - name: default
+  - name: occm
     run_list:
       - recipe[netapp_ontap_cloud::occm_install]
     verifier:

@@ -7,6 +7,9 @@
 require 'spec_helper'
 
 describe 'netapp_ontap_cloud::occm_install' do
+  before do
+    stub_data_bag_item('occm', 'aws').and_return(id: 'aws', aws_access_key: 'testkey', aws_secret_key: 'nopass')
+  end
   context 'When all attributes are default, on an unspecified platform' do
     platforms = {
       'centos' => {
@@ -21,11 +24,13 @@ describe 'netapp_ontap_cloud::occm_install' do
             Fauxhai.mock(platform: platform, version: version)
             allow_any_instance_of(Chef::Provider).to receive(:server_configured?).with('localhost').and_return(false)
           end
-          let(:runner) do
-            ChefSpec::ServerRunner.new(platform: platform, version: version, file_cache_path: '/tmp/cache')
+          let(:chef_run) do
+            ChefSpec::SoloRunner.new(platform: platform, version: version, file_cache_path: '/tmp/cache') do |node|
+              node.normal['occm']['user']['email_address'] = 'test@lab.test'
+              node.normal['occm']['user']['password'] = 'password'
+              node.normal['occm']['company_name'] = 'company_test'
+            end.converge(described_recipe)
           end
-          let(:node) { runner.node }
-          let(:chef_run) { runner.converge(described_recipe) }
           let(:occm_installer) { ::File.join(Chef::Config[:file_cache_path], 'OnCommandCloudManager-V3.2.0.sh') }
 
           it 'converges successfully' do
