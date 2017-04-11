@@ -111,13 +111,14 @@ action_class do
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = true
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    http.read_timeout = 600
     http
   end
 
   def server_responding?(host, wait = nil)
     proceed = false
     step_count = 0
-    url = URI.parse("https://#{host}/occm/api/occm/about")
+    url = URI.parse("https://#{host}/occm/api/occm/system/about")
     connection = connect_server(url)
     until proceed
       begin
