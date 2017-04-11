@@ -23,7 +23,7 @@ describe 'netapp_ontap_cloud::occm_install' do
           before do
             Fauxhai.mock(platform: platform, version: version)
             # we are using the WebMock gem to create our Net::Http stubs
-            stub_request(:get, 'https://localhost/occm/api/occm/about')
+            stub_request(:get, 'https://localhost/occm/api/occm/system/about')
             stub_request(:get, 'https://localhost/occm/api/occm/config')
               .to_return(status: 200, body: JSON.generate('message' => 'OCCM must be setup before performing this operation.'),
                          headers: { 'Content-Type' => 'application/json' })
@@ -77,7 +77,7 @@ describe 'netapp_ontap_cloud::occm_install' do
             expect { chef_run }.to raise_error(RuntimeError, /Unknown OCCM Server error/)
           end
           it 'should raise an RuntimeError if HTTP service not responding' do
-            stub_request(:get, 'https://localhost/occm/api/occm/about')
+            stub_request(:get, 'https://localhost/occm/api/occm/system/about')
               .to_raise(Errno::ENETUNREACH)
             expect { chef_run }.to raise_error(RuntimeError, /The Service never returned despite waiting patiently/)
           end

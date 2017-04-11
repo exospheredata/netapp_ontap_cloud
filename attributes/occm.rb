@@ -8,3 +8,5 @@ default['occm']['server'] = 'localhost'
 default['occm']['user']['email_address'] = nil
 default['occm']['user']['password'] = nil
 default['occm']['company_name'] = nil
+
+default['occm']['installer'] = nil # HTTP path to download OCCM Installer
