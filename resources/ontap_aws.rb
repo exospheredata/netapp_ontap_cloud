@@ -151,8 +151,36 @@ action :wait do
 
   Chef::Log.info("Waiting on the new ONTAP Cloud system - #{new_resource.ontap_name}")
 
-  puts wait_ontap(new_resource.server, validate_system['publicId'])
-  puts 'Win'
+  wait_ontap(new_resource.server, validate_system['publicId'])
+  return new_resource.updated_by_last_action(true)
+end
+
+action :delete do
+  # Ensure that this host has OnCommand Cloud Manager up and running.  If recently started then
+  # we need to wait for the service to respond.
+  server_responding?(new_resource.server, 1)
+
+  # For some reason, the regex on the property name only works when the parameter is sent as ontap_name and not as the name property.
+  # This ensures that the validation is set correctly.
+  raise ArgumentError, "Option ontap_name's value #{new_resource.ontap_name} does not match regular expression [/^[A-Za-z][A-Za-z0-9_]{2,39}$/]" unless new_resource.ontap_name =~ /^[A-Za-z][A-Za-z0-9_]{2,39}$/
+
+  # Need to store the authentication credentials in a cookie object to be leveraged later.  Setting as a
+  # global variable since we need it in so many places.
+  @auth_cookie = authenticate_server(new_resource.server, new_resource.occm_user, new_resource.occm_password)
+
+  # Check to see if the instance already exists
+  validate_system = get_ontap_env(new_resource.server, new_resource.ontap_name)
+  unless validate_system
+    Chef::Log.info("The ONTAP Cloud System #{new_resource.ontap_name} was not found")
+    return new_resource.updated_by_last_action(false)
+  end
+
+  Chef::Log.info("Delete ONTAP Cloud system - #{new_resource.ontap_name}")
+  delete_ontap(new_resource.server, validate_system['publicId'])
+
+  Chef::Log.info("Waiting on the ONTAP Cloud system to Delete - #{new_resource.ontap_name}")
+
+  wait_ontap(new_resource.server, validate_system['publicId'], 'Delete Vsa Working Environment')
   return new_resource.updated_by_last_action(true)
 end
 
@@ -219,6 +247,17 @@ action_class do
     http_response_check(response)
   end
 
+  def delete_ontap(host, public_id)
+    url = URI.parse("https://#{host}/occm/api/vsa/working-environments/#{public_id}")
+    begin
+      connection = connect_server(url)
+    rescue
+      raise connection.inspect
+    end
+    response = http_delete(connection, url)
+    http_response_check(response)
+  end
+
   def get_ontap_env(host, ontap_name)
     url = URI.parse("https://#{host}/occm/api/vsa/working-environments")
     connection = connect_server(url)
@@ -232,7 +271,7 @@ action_class do
     false
   end
 
-  def wait_ontap(host, public_id)
+  def wait_ontap(host, public_id, action_type = 'Create Vsa Working Environment')
     url = URI.parse("https://#{host}/occm/api/audit?workingEnvironmentId=#{public_id}")
     connection = connect_server(url)
     counter = 0
@@ -240,14 +279,14 @@ action_class do
       response = http_get(connection, url)
       we_env = JSON.parse(response.body)
       we_env.each do |log|
-        next unless log['actionName'] == 'Create Vsa Working Environment'
+        next unless log['actionName'] == action_type
         case log['status']
         when 'Success'
           return true
         when 'Failed'
           raise log['errorMessage']
         else
-          Chef::Log.info('Waiting for completion of ONTAP Cloud build')
+          Chef::Log.info('Waiting for completion of OnCommand Cloud Manager process')
           puts JSON.pretty_generate(log['records'].first)
           sleep(30)
           counter += 1
@@ -309,6 +348,21 @@ action_class do
     request['Cookie'] = @auth_cookie if @auth_cookie
     body = body.to_json if body.is_a?(Hash)
     request.body = body
+
+    begin
+      response = conn.start { |http| http.request(request) }
+    rescue Timeout::Error => e
+      Chef::Log.info(e.message)
+      raise "Timeout::Error: #{e.message}"
+    end
+    http_response_check(response)
+  end
+
+  def http_delete(conn, url)
+    request = Net::HTTP::Delete.new(url)
+    request.content_type = 'application/json'
+    request['Referrer'] = 'CHEF'
+    request['Cookie'] = @auth_cookie if @auth_cookie
 
     begin
       response = conn.start { |http| http.request(request) }
