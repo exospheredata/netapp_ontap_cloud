@@ -39,7 +39,7 @@ describe 'netapp_ontap_cloud::ontap_cloud_aws_standalone' do
               .to_return(status: 200, body: JSON.generate([{ 'publicId' => 'tenantID', 'name' => 'Default Tenant' }]),
                          headers: { 'Content-Type' => 'application/json' })
             stub_request(:post, 'https://localhost/occm/api/vsa/working-environments')
-              .to_return(status: 200, body: JSON.generate('VsaWorkingEnvironmentResponse' => { 'name' => 'demolab' }),
+              .to_return(status: 200, body: JSON.generate('publicId' => 'VsaWorkingEnvironment-AtWLuhmG', 'name' => 'demolab'),
                          headers: { 'Content-Type' => 'application/json' })
             stub_request(:get, 'https://localhost/occm/api/vsa/metadata/vpcs?region=us-east-1')
               .to_return(status: 200, body: JSON.generate([{ 'vpcId' => 'vpc-12345678', 'cidrBlock' => '172.31.0.0/16',
@@ -47,6 +47,9 @@ describe 'netapp_ontap_cloud::ontap_cloud_aws_standalone' do
                          headers: { 'Content-Type' => 'application/json' })
             stub_request(:get, 'https://localhost/occm/api/vsa/working-environments')
               .to_return(status: 200, body: JSON.generate([]),
+                         headers: { 'Content-Type' => 'application/json' })
+            stub_request(:get, 'https://localhost/occm/api/audit?workingEnvironmentId=VsaWorkingEnvironment-AtWLuhmG')
+              .to_return(status: 200, body: JSON.generate([{ 'actionName' => 'Create Vsa Working Environment', 'status' => 'Success' }]),
                          headers: { 'Content-Type' => 'application/json' })
           end
           let(:runner) do
@@ -58,12 +61,12 @@ describe 'netapp_ontap_cloud::ontap_cloud_aws_standalone' do
           context 'Success Tests' do
             it 'converges successfully' do
               expect { chef_run }.to_not raise_error
-              resource = chef_run.netapp_ontap_cloud_ontap_aws('Setup ONTAP Cloud')
-              expect(resource.updated_by_last_action?).to be true
+              create_resource = chef_run.netapp_ontap_cloud_ontap_aws('Setup ONTAP Cloud')
+              expect(create_resource.updated_by_last_action?).to be true
             end
-            it 'does nothing if the ONTAP environment exists' do
+            it 'does not create if the ONTAP environment exists' do
               stub_request(:get, 'https://localhost/occm/api/vsa/working-environments')
-                .to_return(status: 200, body: JSON.generate([{ 'publicId' => 'VsaWorkingEnvironment-4nc7ttNy', 'name' => 'demolab' }]),
+                .to_return(status: 200, body: JSON.generate([{ 'publicId' => 'VsaWorkingEnvironment-AtWLuhmG', 'name' => 'demolab' }]),
                            headers: { 'Content-Type' => 'application/json' })
               expect { chef_run }.to_not raise_error
               # Verify that the process was skipped and update == False

@@ -33,5 +33,6 @@ netapp_ontap_cloud_ontap_aws 'Setup ONTAP Cloud' do
   subnet_id node['ontap_cloud']['aws']['subnet_id']
   ebs_volume_size '100GB'
   bypass_snapshot true
+  wait_execution true
   action :create
 end

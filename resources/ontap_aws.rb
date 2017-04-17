@@ -28,6 +28,7 @@ require 'json'
 
 default_action :create
 
+# OCCM Required Properties
 property :server, String, required: true
 property :occm_user, String, required: true
 property :occm_password, String, required: true, identity: false, sensitive: true
@@ -35,6 +36,9 @@ property :ontap_name, String, required: true, name_property: true # Regex is eva
 property :tenant_name, String, required: true
 
 # AWS Configuration
+#
+# TODO: Move the required aspect of these into an actual method to be called.  These properties are not
+# required for every action.
 property :region, String, required: true, regex: [/^[a-z]{2}-[a-z]+-\d$/]
 property :vpc_id, String, required: true, regex: [/^vpc-[a-zA-Z0-9]{8}$/]
 property :subnet_id, String, required: true, regex: [/^subnet-[a-zA-Z0-9]{8}$/]
@@ -53,9 +57,7 @@ property :platform_license, String # Future property
 # Supported versions found at https://<occm-host>/occm/api/vsa/metadata/ebs-volume-types
 # TODO:  Create a method to match approved sizes to disk types.
 #
-# io1: only supported for the boot devices and not for Data disks
-# standard: is left-in for legacy
-property :ebs_volume_type, String, equal_to: %w(gp2 st1 sc1), default: 'gp2', required: true
+property :ebs_volume_type, String, equal_to: %w(gp2 st1 sc1), default: 'gp2'
 property :ebs_volume_size, String, equal_to: %w(100GB 500GB 1TB 2TB 4TB 8TB), default: '1TB'
 
 property :clusterKeyPairName, String # Future property
@@ -64,6 +66,10 @@ property :svm_password, String, required: true, identity: false, sensitive: true
 # Maps to skipSnapshots to override if an EBS snapshot should be taken on first deploy
 property :bypass_snapshot, [TrueClass, FalseClass], default: false
 property :data_encryption_type, String, equal_to: ['NONE', ' AWS', ' ONTAP'], default: 'NONE'
+
+# This can be used with resource actions like :create to force the process to wait until after the exeuction
+# of the job before moving on.
+property :wait_execution, [TrueClass, FalseClass], default: false
 
 # TODO:  Add custom method to verify that account has access to Subscription:
 # https://<occm-host>/occm/api/vsa/metadata/validate-subscribed-to-ontap-cloud
@@ -120,7 +126,33 @@ action :create do
 
   output = JSON.parse(response.body)
   Chef::Log.info("ONTAP Cloud System deployment has started - #{output['publicId']}")
-  puts JSON.pretty_generate(output)
+  return new_resource.updated_by_last_action(true) unless new_resource.wait_execution
+  Chef::Log.info("Waiting on the new ONTAP Cloud system - #{new_resource.ontap_name}")
+  wait_ontap(new_resource.server, output['publicId'])
+  return new_resource.updated_by_last_action(true)
+end
+
+action :wait do
+  # Ensure that this host has OnCommand Cloud Manager up and running.  If recently started then
+  # we need to wait for the service to respond.
+  server_responding?(new_resource.server, 1)
+
+  # For some reason, the regex on the property name only works when the parameter is sent as ontap_name and not as the name property.
+  # This ensures that the validation is set correctly.
+  raise ArgumentError, "Option ontap_name's value #{new_resource.ontap_name} does not match regular expression [/^[A-Za-z][A-Za-z0-9_]{2,39}$/]" unless new_resource.ontap_name =~ /^[A-Za-z][A-Za-z0-9_]{2,39}$/
+
+  # Need to store the authentication credentials in a cookie object to be leveraged later.  Setting as a
+  # global variable since we need it in so many places.
+  @auth_cookie = authenticate_server(new_resource.server, new_resource.occm_user, new_resource.occm_password)
+
+  # Check to see if the instance already exists
+  validate_system = get_ontap_env(new_resource.server, new_resource.ontap_name)
+  raise ArgumentError, "The ONTAP Cloud System #{new_resource.ontap_name} was not found" unless validate_system
+
+  Chef::Log.info("Waiting on the new ONTAP Cloud system - #{new_resource.ontap_name}")
+
+  puts wait_ontap(new_resource.server, validate_system['publicId'])
+  puts 'Win'
   return new_resource.updated_by_last_action(true)
 end
 
@@ -193,9 +225,36 @@ action_class do
     response = http_get(connection, url)
     we_environments = JSON.parse(response.body)
     we_environments.each do |we_environment|
+      # We will return the entire VSA object if the unique name matches.  This is dependent on OCCM
+      # maintaining that the name must be unique within the environment.
       return we_environment if we_environment['name'] == ontap_name
     end
     false
+  end
+
+  def wait_ontap(host, public_id)
+    url = URI.parse("https://#{host}/occm/api/audit?workingEnvironmentId=#{public_id}")
+    connection = connect_server(url)
+    counter = 0
+    while counter < 40
+      response = http_get(connection, url)
+      we_env = JSON.parse(response.body)
+      we_env.each do |log|
+        next unless log['actionName'] == 'Create Vsa Working Environment'
+        case log['status']
+        when 'Success'
+          return true
+        when 'Failed'
+          raise log['errorMessage']
+        else
+          Chef::Log.info('Waiting for completion of ONTAP Cloud build')
+          puts JSON.pretty_generate(log['records'].first)
+          sleep(30)
+          counter += 1
+        end
+      end
+    end
+    raise 'Failed to wait for ONTAP Cloud system'
   end
 
   def get_tenant_id(host, tenant_name)
