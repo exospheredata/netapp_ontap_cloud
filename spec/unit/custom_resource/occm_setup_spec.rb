@@ -6,9 +6,10 @@
 
 require 'spec_helper'
 
-describe 'netapp_ontap_cloud::occm_install' do
+describe 'netapp_ontap_cloud::occm_setup' do
   before do
     stub_data_bag_item('occm', 'aws').and_return(id: 'aws', aws_access_key: 'testkey', aws_secret_key: 'nopass')
+    stub_data_bag_item('occm', 'admin_credentials').and_return(id: 'admin_credentials', email_address: 'test@lab.test', password: 'Netapp1')
   end
   context 'When all attributes are default' do
     platforms = {

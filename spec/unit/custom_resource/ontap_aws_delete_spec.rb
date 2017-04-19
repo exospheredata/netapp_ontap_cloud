@@ -9,6 +9,7 @@ require 'spec_helper'
 describe 'netapp_ontap_cloud::ontap_cloud_aws_standalone_delete' do
   before do
     stub_data_bag_item('occm', 'aws').and_return(id: 'aws', aws_access_key: 'testkey', aws_secret_key: 'nopass')
+    stub_data_bag_item('occm', 'admin_credentials').and_return(id: 'admin_credentials', email_address: 'test@lab.test', password: 'Netapp1')
   end
   context 'When all attributes are default' do
     platforms = {
@@ -23,8 +24,6 @@ describe 'netapp_ontap_cloud::ontap_cloud_aws_standalone_delete' do
           before do
             Fauxhai.mock(platform: platform, version: version)
             # Set test suite node attributes
-            node.normal['occm']['user']['email_address'] = 'test@lab.test'
-            node.normal['occm']['user']['password'] = 'password'
             node.normal['occm']['company_name'] = 'company_test'
             node.normal['ontap_cloud']['ontap']['standalone']['name'] = 'demolab'
 

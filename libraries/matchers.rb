@@ -10,4 +10,8 @@ if defined?(ChefSpec)
   def create_netapp_ontap_cloud_ontap_aws(resource_name)
     ChefSpec::Matchers::ResourceMatcher.new(:netapp_ontap_cloud_ontap_aws, :create, resource_name)
   end
+
+  def delete_netapp_ontap_cloud_ontap_aws(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:netapp_ontap_cloud_ontap_aws, :delete, resource_name)
+  end
 end

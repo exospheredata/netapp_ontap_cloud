@@ -11,11 +11,24 @@ rescue StandardError
   occm_keys = {}
 end
 
+begin
+  occm_admin = data_bag_item('occm', 'admin_credentials')
+rescue StandardError
+  raise 'The DataBagItem(\'occm\', \'admin_credentials\') was not found.  Unable to set the admin credentials'
+end
+
+begin
+  ontap_admin = data_bag_item('occm', node['ontap_cloud']['ontap']['standalone']['name'])
+rescue StandardError
+  raise "The DataBagItem(\'occm\', \'#{node['ontap_cloud']['ontap']['standalone']['name']}\') was not found.  Unable to set the ONTAP credentials"
+end
+
 netapp_ontap_cloud_occm 'Setup Cloud Manager' do
   server node['occm']['server']
-  email_address node['occm']['user']['email_address']
-  password node['occm']['user']['password']
+  email_address occm_admin['email_address']
+  password occm_admin['password']
   company node['occm']['company_name']
+  tenant_name node['occm']['tenant_name']
   aws_key occm_keys['aws_access_key'] || nil
   aws_secret occm_keys['aws_secret_key'] || nil
   action :setup
@@ -23,11 +36,11 @@ end
 
 netapp_ontap_cloud_ontap_aws 'Setup ONTAP Cloud' do
   server node['occm']['server']
-  occm_user node['occm']['user']['email_address']
-  occm_password node['occm']['user']['password']
+  occm_user occm_admin['email_address']
+  occm_password occm_admin['password']
   tenant_name 'Default Tenant'
   ontap_name node['ontap_cloud']['ontap']['standalone']['name']
-  svm_password 'Netapp123'
+  svm_password ontap_admin['svm_password']
   region node['ontap_cloud']['aws']['region']
   vpc_id node['ontap_cloud']['aws']['vpc_id']
   subnet_id node['ontap_cloud']['aws']['subnet_id']

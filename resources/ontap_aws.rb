@@ -275,7 +275,7 @@ action_class do
     url = URI.parse("https://#{host}/occm/api/audit?workingEnvironmentId=#{public_id}")
     connection = connect_server(url)
     counter = 0
-    while counter < 40
+    while counter < 90 # This provides a wait period of 45mins in the event it takes a long time to execute
       response = http_get(connection, url)
       we_env = JSON.parse(response.body)
       we_env.each do |log|

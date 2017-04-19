@@ -4,20 +4,15 @@
 #
 # Copyright:: 2017, Exosphere Data, LLC, All Rights Reserved.
 
-begin
-  occm_keys = data_bag_item('occm', 'aws')
-rescue StandardError
-  Chef::Log.info('The DataBagItem(\'occm\', \'aws\') was not found.  Unable to set the AWS Credentials')
-  occm_keys = {}
-end
-
 occm_installer = ::File.join(Chef::Config[:file_cache_path], 'OnCommandCloudManager-V3.2.0.sh')
 
 # If the custom install URL was provided, then download the file.  Otherwise, use the local cookbook_file if
 # the file exists.
 #
-# Due to EULA and license restrictions, we are unable to directly download this software so it needs to be
-# included in the cookbook or stored on a local HTTP server.
+# NOTE: Due to EULA and license restrictions, we are unable to directly download this software so it needs to be
+# included in the cookbook or stored on a local HTTP server.  It is highly advised for you to store the binary
+# in a website instead of the cookbook since on every converge the file would have to be transferred.  Also,
+# we have added a chefignore entry to prevent uploading the media to the CHEF Server
 if node['occm']['installer'].nil?
   cookbook_file occm_installer do
     source 'OnCommandCloudManager-V3.2.0.sh'
@@ -38,14 +33,4 @@ end
 # Ensure that OnCommand Cloud Manager service is enabled and running.
 service 'occm' do
   action [:enable, :start]
-end
-
-netapp_ontap_cloud_occm 'Setup Cloud Manager' do
-  server node['occm']['server']
-  email_address node['occm']['user']['email_address']
-  password node['occm']['user']['password']
-  company node['occm']['company_name']
-  aws_key occm_keys['aws_access_key'] || nil
-  aws_secret occm_keys['aws_secret_key'] || nil
-  action :setup
 end

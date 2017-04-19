@@ -27,9 +27,30 @@ platforms:
 suites:
   - name: occm
     run_list:
-      - recipe[netapp_ontap_cloud::occm_install]
+      - recipe[netapp_ontap_cloud::occm_setup]
     verifier:
       inspec_tests:
         - test/smoke/occm
     attributes:
+      occm:
+        user:
+        company_name: 'Exosphere'
+        install_pkg: true
+  - name: ontap_aws
+    run_list:
+      - recipe[netapp_ontap_cloud::occm_install]
+      - recipe[netapp_ontap_cloud::ontap_cloud_aws_standalone]
+    verifier:
+      inspec_tests:
+        - test/smoke/occm
+    attributes:
+      occm:
+        user:
+        company_name: 'Exosphere'
+        install_pkg: true
+      ontap_cloud:
+        ontap:
+          standalone:
+            name: 'demolab'
+
 

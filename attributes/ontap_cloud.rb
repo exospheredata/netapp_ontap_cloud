@@ -1,5 +1,10 @@
+#
+# Cookbook Name:: netapp_ontap_cloud
+# Attributes:: ontap_cloud
+#
+# Copyright (c) 2017 Exosphere Data LLC, All Rights Reserved.
 
-default['ontap_cloud']['ontap']['standalone']['name'] = 'demolab'
-default['ontap_cloud']['aws']['vpc_id'] = 'vpc-7eed091a'
-default['ontap_cloud']['aws']['region'] = 'us-east-1'
-default['ontap_cloud']['aws']['subnet_id'] = 'subnet-7ce3f846'
+default['ontap_cloud']['ontap']['standalone']['name'] = nil
+default['ontap_cloud']['aws']['vpc_id'] = nil
+default['ontap_cloud']['aws']['region'] = nil
+default['ontap_cloud']['aws']['subnet_id'] = nil

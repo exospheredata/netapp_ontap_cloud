@@ -105,3 +105,7 @@ Strainerfile
 ###########
 .vagrant
 Vagrantfile
+
+# OCCM Binary #
+###########
+*/*/OnCommandCloudManager*sh

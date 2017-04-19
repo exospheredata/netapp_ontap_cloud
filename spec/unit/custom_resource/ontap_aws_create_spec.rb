@@ -9,6 +9,9 @@ require 'spec_helper'
 describe 'netapp_ontap_cloud::ontap_cloud_aws_standalone' do
   before do
     stub_data_bag_item('occm', 'aws').and_return(id: 'aws', aws_access_key: 'testkey', aws_secret_key: 'nopass')
+    stub_data_bag_item('occm', 'admin_credentials').and_return(id: 'admin_credentials', email_address: 'test@lab.test', password: 'Netapp1')
+    stub_data_bag_item('occm', 'demolab').and_return(id: 'demolab', svm_password: 'Netapp123')
+    stub_data_bag_item('occm', '1cot').and_return(id: 'demolab', svm_password: 'Netapp123')
   end
   context 'When all attributes are default' do
     platforms = {
@@ -23,8 +26,6 @@ describe 'netapp_ontap_cloud::ontap_cloud_aws_standalone' do
           before do
             Fauxhai.mock(platform: platform, version: version)
             # Set test suite node attributes
-            node.normal['occm']['user']['email_address'] = 'test@lab.test'
-            node.normal['occm']['user']['password'] = 'password'
             node.normal['occm']['company_name'] = 'company_test'
             node.normal['ontap_cloud']['aws']['region'] = 'us-east-1'
             node.normal['ontap_cloud']['aws']['vpc_id'] = 'vpc-12345678'
