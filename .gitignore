@@ -22,3 +22,6 @@ Policyfile.lock.json
 
 # Do not include OnCommandCloudManager binary
 */*/OnCommandCloudManager*sh
+
+# Inspec
+test/smoke/*/inspec.lock

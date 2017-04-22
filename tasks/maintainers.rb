@@ -17,7 +17,7 @@
 
 require 'rake'
 
-SOURCE = File.join(File.dirname(__FILE__), '..', 'MAINTAINERS.toml')
+SOURCE = File.join(File.dirname(__FILE__), '.', 'MAINTAINERS.toml')
 TARGET = File.join(File.dirname(__FILE__), '..', 'MAINTAINERS.md')
 
 begin

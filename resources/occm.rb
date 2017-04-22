@@ -34,17 +34,17 @@ property :email_address, String, required: true
 property :password, String, required: true
 
 property :company, String, required: true
-property :site, String
+property :site, String, default: 'ONTAP Cloud Lab'
 
 # User Management properties
-property :first_name, String
-property :last_name, String
-property :role_id, String # Role-1 equals 'Cloud Manager Admin'
-property :aws_key, String
-property :aws_secret, String
+property :first_name, String, default: 'occm'
+property :last_name, String, default: 'admin'
+property :role_name, String, equal_to: ['Cloud Manager Admin', 'Tenant Admin', 'Working Environment Admin'] # Role-1 equals 'Cloud Manager Admin'
+property :aws_key, String, sensitive: true
+property :aws_secret, String, sensitive: true
 
 # Tenant properties
-property :tenant_name, String
+property :tenant_name, String, required: true
 property :description, String
 property :cost_center, String
 
@@ -59,8 +59,8 @@ action :setup do
   payload = {}
   user_request = {}
   user_request['email'] = new_resource.email_address
-  user_request['lastName'] = new_resource.last_name || 'admin'
-  user_request['firstName'] = new_resource.first_name || 'occm'
+  user_request['lastName'] = new_resource.last_name
+  user_request['firstName'] = new_resource.first_name
   user_request['password'] = new_resource.password
   user_request['roleId'] = 'Role-1' # Role-1 equals 'Cloud Manager Admin'
   user_request['accessKey'] = new_resource.aws_key || nil
@@ -69,12 +69,12 @@ action :setup do
     Chef::Log.info('No AWS Credentials sent.  You will not be able to deploy ONTAP Cloud for AWS until this is modified.')
   end
   tenant_request = {}
-  tenant_request['name'] = new_resource.tenant_name || 'Default Tenant'
+  tenant_request['name'] = new_resource.tenant_name
   tenant_request['description'] = new_resource.description || ''
   tenant_request['costCenter'] = new_resource.cost_center || ''
   payload['userRequest'] = user_request
   payload['tenantRequest'] = tenant_request
-  payload['site'] = new_resource.site || 'ONTAP Cloud Lab'
+  payload['site'] = new_resource.site
   payload['company'] = new_resource.company
   payload['proxyUrl'] = { 'uri' => '' }
 
