@@ -52,5 +52,6 @@ suites:
         ontap:
           standalone:
             name: 'demolab'
+            size: '100GB'
 
 

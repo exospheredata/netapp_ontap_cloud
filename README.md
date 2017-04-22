@@ -90,7 +90,7 @@ This cookbook installs, configures and manages NetApp OnCommand Cloud Manager sy
   "password": "Netapp1"
 }
 ```
-- Required Data_bag `occm` and item `<ontap-cloud-name>`.  Handles OCCM Admin credentials used in recipes.
+- Required Data_bag `occm` and item `<ontap-cloud-name>`.  Handles ONTAP Cloud Cluster Admin credentials assigned to the controller.
 ```
 {
   "id": "demolab",
@@ -123,6 +123,10 @@ The OnCommand Cloud Manager system requires that credentials exist either for th
 
 ### ONTAP Cloud
 - `node['ontap_cloud']['ontap']['standalone']['name']` - String.  ONTAP Cloud system name.<br>**Value must match regex: [/^[A-Za-z][A-Za-z0-9_]{2,39}$/]**
+- `node['ontap_cloud']['ontap']['standalone']['ebs_type']` - String. AWS EBS Volume type.  Supported values are ['gp2', 'st1', 'sc1'].  Default value is 'gp2'
+- `node['ontap_cloud']['ontap']['standalone']['size']` - String. Size of the EBS Volume. Supported values are ['100GB', '500GB', '1TB', '2TB', '4TB', '8TB'].  Default value is '1TB'
+- `node['ontap_cloud']['ontap']['standalone']['instance_type']` - String. ONTAP Cloud for AWS instance type.  Default value is 'm4.xlarge'.
+- `node['ontap_cloud']['ontap']['standalone']['license_type']` - String. ONTAP Cloud license type.  Supported values are ['cot-explore-paygo', 'cot-standard-paygo', 'cot-premium-paygo']. Default value is 'cot-explore-paygo'
 
 - `node['ontap_cloud']['aws']['region']` - String.  Required for AWS deployments.  <br> **Value must match regex:[/^[a-z]{2}-[a-z]+-\d$/]**
 

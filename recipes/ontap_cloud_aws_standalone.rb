@@ -44,7 +44,10 @@ netapp_ontap_cloud_ontap_aws 'Setup ONTAP Cloud' do
   region node['ontap_cloud']['aws']['region']
   vpc_id node['ontap_cloud']['aws']['vpc_id']
   subnet_id node['ontap_cloud']['aws']['subnet_id']
-  ebs_volume_size '100GB'
+  ebs_volume_type node['ontap_cloud']['ontap']['standalone']['ebs_type']
+  ebs_volume_size node['ontap_cloud']['ontap']['standalone']['size']
+  instance_type node['ontap_cloud']['ontap']['standalone']['instance_type']
+  license_type node['ontap_cloud']['ontap']['standalone']['license_type']
   bypass_snapshot true
   wait_execution true
   action :create
