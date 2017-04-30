@@ -4,7 +4,11 @@ maintainer_email 'chef@exospheredata.com'
 license 'all_rights'
 description 'Manages NetApp OnCommand Cloud Manager and ONTAP Cloud'
 long_description 'Manages NetApp OnCommand Cloud Manager and ONTAP Cloud'
-version '0.5.0'
+version '0.6.0'
+
+%w(debian ubuntu centos redhat amazon).each do |os|
+  supports os
+end
 
 # The `issues_url` points to the location where issues for this cookbook are
 # tracked.  A `View Issues` link will be displayed on this cookbook's page when

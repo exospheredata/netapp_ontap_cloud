@@ -38,12 +38,23 @@ This cookbook installs, configures and manages NetApp OnCommand Cloud Manager sy
         - [CHEF properties](#chef-properties)
       - [Examples:](#examples-1)
         - [Deploy ONTAP Cloud instance and wait for launch to complete](#deploy-ontap-cloud-instance-and-wait-for-launch-to-complete)
+  - [netapp_ontap_cloud_ndvp](#netapp_ontap_cloud_ndvp)
+    - [Action :install (default)](#action-install-default)
+    - [Action :config](#action-config)
+    - [Action :delete](#action-delete)
+      - [Properties:](#properties-2)
+        - [OnCommand Cloud Manager properties](#oncommand-cloud-manager-properties-1)
+        - [ONTAP Instance properties](#ontap-instance-properties-1)
+        - [NetApp Docker Volume  properties](#netapp-docker-volume--properties)
+      - [Examples:](#examples-2)
+        - [Configure and Install the NetApp Docker Volume Plug-in with a default configuration file.](#configure-and-install-the-netapp-docker-volume-plug-in-with-a-default-configuration-file)
 - [Recipes](#recipes)
   - [default](#default)
   - [occm_install](#occm_install)
   - [occm_setup](#occm_setup)
   - [ontap_cloud_aws_standalone](#ontap_cloud_aws_standalone)
   - [ontap_cloud_aws_standalone_delete](#ontap_cloud_aws_standalone_delete)
+  - [docker_volume_plugin](#docker_volume_plugin)
 - [Upload to Chef Server](#upload-to-chef-server)
 - [Matchers/Helpers](#matchershelpers)
   - [Matchers](#matchers)
@@ -208,7 +219,7 @@ _NOTE: properties in bold are required_
 | **`server`** | String | Hostname or IP address of the OnCommand Cloud Manager system |
 | **`occm_user`** | String | Email address of the OCCM user |
 | **`occm_password`** | String | Password for the user supplied |
-| **`ontap_name`** | String | The name of the ONTAP Cloud system to be created.  This is the name property for the resource block. <br><br> **Value must match regex: [/^[A-Za-z][A-Za-z0-9_]{2,39}$/]**|
+| **`ontap_name`** | String | **NAME Property.**  The name of the ONTAP Cloud system to be created.  This is the name property for the resource block. <br><br> **Value must match regex: [/^[A-Za-z][A-Za-z0-9_]{2,39}$/]**|
 | **`tenant_name`** | String | OCCM Tenant name to which the user has access and the new ONTAP Cloud will be deployed |
 
 ###### Amazon Web Services properties
@@ -270,6 +281,70 @@ end
 
 ```
 
+### netapp_ontap_cloud_ndvp
+Deploys and configures the NetApp Docker Volume Plug-in and creates a connection to the ONTAP Cloud system selected.
+
+_NOTE: Requires that the host already installs Docker Engine 17.03+_
+#### Action :install (default)
+---
+Installs the NFS client package for the host and installs the current version of the NetApp Docker Volume Plug-in
+
+#### Action :config
+---
+Determines the configuration details of the selected ONTAP Cloud system and creates the required configuration file for the ONTAP Cloud system based on details from the OnCommand Cloud Manager system.
+
+#### Action :delete
+---
+Future action and currently not implemented.
+
+##### Properties:
+_NOTE: properties in bold are required_
+
+
+property :server, String, required: true
+property :occm_user, String, required: true
+property :occm_password, String, required: true, identity: false, sensitive: true
+property :ontap_name, String, required: true, name_property: true # Regex is evaluated in the action
+property :tenant_name, String, required: true
+property :svm_password, String, required: true, identity: false, sensitive: true
+
+###### OnCommand Cloud Manager properties
+
+| Property | Type | Description |
+| ------------- |-------------|-------------|
+| **`server`** | String | Hostname or IP address of the OnCommand Cloud Manager system |
+| **`occm_user`** | String | Email address of the OCCM user |
+| **`occm_password`** | String | Password for the user supplied |
+| **`ontap_name`** | String | **NAME Property.**  The name of the ONTAP Cloud system to be used.  This system must already exist and be visible to the selected OCCM server.  This is the name property for the resource block. <br><br> **Value must match regex: [/^[A-Za-z][A-Za-z0-9_]{2,39}$/]**|
+| **`tenant_name`** | String | OCCM Tenant name to which the user has access and the new ONTAP Cloud will be deployed |
+
+###### ONTAP Instance properties
+
+| Property | Type | Description |
+| ------------- |-------------|-------------|
+| **`svm_password`** | String | Sets the password on the cluster admin account for the ONTAP Cloud system.  Sensitve and will not print in the logs. |
+
+###### NetApp Docker Volume  properties
+
+| Property | Type | Description |
+| ------------- |-------------|-------------|
+| **`ndvp_config`** | String | Name for the configuration file and will be saved to `/etc/netappdvp`.  Default value is 'config.json'.|
+
+
+##### Examples:
+###### Configure and Install the NetApp Docker Volume Plug-in with a default configuration file.
+```ruby
+netapp_ontap_cloud_ndvp 'myontap' do
+  server 'localhost'
+  occm_user 'occm@lab.test'
+  occm_password 'Netapp1'
+  tenant_name 'Default Tenant'
+  svm_password 'Netapp123'
+  action [:config, :install]
+end
+
+```
+
 ## Recipes
 ### default
 
@@ -291,6 +366,11 @@ Configures NetApp OnCommand Cloud Manager service using the default configuratio
 
 Removes an existing standalone ONTAP Cloud for AWS system.
 
+### docker_volume_plugin
+
+Installs and configures NFS and the NetApp Docker Volume Plug-in on the host to which this recipe is run.
+
+_NOTE: Requires that the host already installs Docker Engine 17.03+_
 
 ## Upload to Chef Server
 This cookbook should be included in each organization of your CHEF environment.  When importing, leverage Berkshelf:
@@ -309,9 +389,14 @@ _Note: Matchers should always be created in `libraries/matchers.rb` and used for
 
 **Tests the LWRP (netapp_ontap_cloud_occm) with an action**
 * `setup_netapp_ontap_cloud_occm(resource_name)`
+
+**Tests the LWRP (netapp_ontap_cloud_ontap_aws) with an action**
 * `create_netapp_ontap_cloud_ontap_aws(resource_name)`
 * `delete_netapp_ontap_cloud_ontap_aws(resource_name)`
 
+**Tests the LWRP (netapp_ontap_cloud_ndvp) with an action**
+* `install_netapp_ontap_cloud_ndvp(resource_name)`
+* `config_netapp_ontap_cloud_ndvp(resource_name)`
 
 ## Cookbook Testing
 
