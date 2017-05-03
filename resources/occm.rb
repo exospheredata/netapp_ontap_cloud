@@ -31,7 +31,7 @@ default_action :setup
 # Server configuration
 property :server, String, required: true
 property :email_address, String, required: true
-property :password, String, required: true
+property :password, String, required: true, sensitive: true
 
 property :company, String, required: true
 property :site, String, default: 'ONTAP Cloud Lab'
@@ -160,7 +160,7 @@ action_class do
   def http_get(conn, _headers, url)
     request = Net::HTTP::Get.new(url)
     request.content_type = 'application/json'
-    request['Referrer'] = 'CHEF'
+    request['Referer'] = 'ExosphereDataLLC'
 
     begin
       response = conn.start { |http| http.request(request) }
@@ -174,7 +174,7 @@ action_class do
   def http_post(conn, url, body)
     request = Net::HTTP::Post.new(url)
     request.content_type = 'application/json'
-    request['Referrer'] = 'CHEF'
+    request['Referer'] = 'ExosphereDataLLC'
     body = body.to_json if body.is_a?(Hash)
     request.body = body
 

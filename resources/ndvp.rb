@@ -26,14 +26,14 @@ require 'net/https'
 require 'uri'
 require 'json'
 
-default_action :install
+default_action :config
 
 # OCCM Required Properties
 property :server, String, required: true
 property :occm_user, String, required: true
 property :occm_password, String, required: true, identity: false, sensitive: true
 property :ontap_name, String, required: true, name_property: true # Regex is evaluated in the action
-property :tenant_name, String, required: true
+property :tenant_name, String # Future Property
 property :svm_password, String, required: true, identity: false, sensitive: true
 
 # NetApp Docker Volume Plugin
@@ -110,6 +110,7 @@ action :config do
       size: '20GB',
       export_policy: "export-svm_#{new_resource.ontap_name}"
     )
+    sensitive true
   end
 
   return new_resource.updated_by_last_action(true)

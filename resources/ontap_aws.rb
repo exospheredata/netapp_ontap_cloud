@@ -329,7 +329,7 @@ action_class do
   def http_get(conn, url)
     request = Net::HTTP::Get.new(url)
     request.content_type = 'application/json'
-    request['Referrer'] = 'CHEF'
+    request['Referer'] = 'ExosphereDataLLC'
     request['Cookie'] = @auth_cookie if @auth_cookie
 
     begin
@@ -344,7 +344,7 @@ action_class do
   def http_post(conn, url, body)
     request = Net::HTTP::Post.new(url)
     request.content_type = 'application/json'
-    request['Referrer'] = 'CHEF'
+    request['Referer'] = 'ExosphereDataLLC'
     request['Cookie'] = @auth_cookie if @auth_cookie
     body = body.to_json if body.is_a?(Hash)
     request.body = body
@@ -361,7 +361,7 @@ action_class do
   def http_delete(conn, url)
     request = Net::HTTP::Delete.new(url)
     request.content_type = 'application/json'
-    request['Referrer'] = 'CHEF'
+    request['Referer'] = 'ExosphereDataLLC'
     request['Cookie'] = @auth_cookie if @auth_cookie
 
     begin

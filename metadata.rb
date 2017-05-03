@@ -4,7 +4,7 @@ maintainer_email 'chef@exospheredata.com'
 license 'all_rights'
 description 'Manages NetApp OnCommand Cloud Manager and ONTAP Cloud'
 long_description 'Manages NetApp OnCommand Cloud Manager and ONTAP Cloud'
-version '0.6.0'
+version '1.0.0'
 
 %w(debian ubuntu centos redhat amazon).each do |os|
   supports os
