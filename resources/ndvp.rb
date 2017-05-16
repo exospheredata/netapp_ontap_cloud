@@ -1,5 +1,5 @@
 # Cookbook Name:: netapp_ontap_cloud
-# Resource:: ontap_aws
+# Resource:: ndvp
 #
 # Author:: Jeremy Goodrum
 # Email:: chef@exospheredata.com
@@ -26,113 +26,50 @@ require 'net/https'
 require 'uri'
 require 'json'
 
-default_action :create
+default_action :config
 
 # OCCM Required Properties
 property :server, String, required: true
 property :occm_user, String, required: true
 property :occm_password, String, required: true, identity: false, sensitive: true
 property :ontap_name, String, required: true, name_property: true # Regex is evaluated in the action
-property :tenant_name, String, required: true
-
-# AWS Configuration
-#
-# TODO: Move the required aspect of these into an actual method to be called.  These properties are not
-# required for every action.
-property :region, String, required: true, regex: [/^[a-z]{2}-[a-z]+-\d$/]
-property :vpc_id, String, required: true, regex: [/^vpc-[a-zA-Z0-9]{8}$/]
-property :subnet_id, String, required: true, regex: [/^subnet-[a-zA-Z0-9]{8}$/]
-property :aws_tags, String # Future property
-
-# VsaMetadata
-property :instance_type, String, required: true, default: 'm4.xlarge' # TODO: Create a list of supported Instance Types and a method to validate
-
-# Future licenseType = 'cot-premium-byol'
-property :license_type, String, equal_to: ['cot-explore-paygo', 'cot-standard-paygo', 'cot-premium-paygo'], default: 'cot-explore-paygo', required: true
-property :ontap_version, String, default: 'latest'
-property :use_latest, [TrueClass, FalseClass], default: true
-property :platform_license, String # Future property
-
-# EBS Volume Types and details
-# Supported versions found at https://<occm-host>/occm/api/vsa/metadata/ebs-volume-types
-# TODO:  Create a method to match approved sizes to disk types.
-#
-property :ebs_volume_type, String, equal_to: %w(gp2 st1 sc1), default: 'gp2'
-property :ebs_volume_size, String, equal_to: %w(100GB 500GB 1TB 2TB 4TB 8TB), default: '1TB'
-
-property :clusterKeyPairName, String # Future property
+property :tenant_name, String # Future Property
 property :svm_password, String, required: true, identity: false, sensitive: true
 
-# Maps to skipSnapshots to override if an EBS snapshot should be taken on first deploy
-property :bypass_snapshot, [TrueClass, FalseClass], default: false
-property :data_encryption_type, String, equal_to: ['NONE', ' AWS', ' ONTAP'], default: 'NONE'
+# NetApp Docker Volume Plugin
+property :ndvp_config, String, required: true, default: 'config.json'
 
-# This can be used with resource actions like :create to force the process to wait until after the exeuction
-# of the job before moving on.
-property :wait_execution, [TrueClass, FalseClass], default: false
-
-# TODO:  Add custom method to verify that account has access to Subscription:
-# https://<occm-host>/occm/api/vsa/metadata/validate-subscribed-to-ontap-cloud
-
-action :create do
-  # Ensure that this host has OnCommand Cloud Manager up and running.  If recently started then
-  # we need to wait for the service to respond.
-  server_responding?(new_resource.server, 1)
-
-  # For some reason, the regex on the property name only works when the parameter is sent as ontap_name and not as the name property.
-  # This ensures that the validation is set correctly.
-  raise ArgumentError, "Option ontap_name's value #{new_resource.ontap_name} does not match regular expression [/^[A-Za-z][A-Za-z0-9_]{2,39}$/]" unless new_resource.ontap_name =~ /^[A-Za-z][A-Za-z0-9_]{2,39}$/
-
-  # Need to store the authentication credentials in a cookie object to be leveraged later.  Setting as a
-  # global variable since we need it in so many places.
-  @auth_cookie = authenticate_server(new_resource.server, new_resource.occm_user, new_resource.occm_password)
-
-  # Check to see if the instance already exists
-  validate_system = get_ontap_env(new_resource.server, new_resource.ontap_name)
-  if validate_system
-    Chef::Log.info("ONTAP Cloud system #{new_resource.ontap_name} exists")
-    return new_resource.updated_by_last_action(false)
+action :install do
+  case node['platform']
+  when 'debian', 'ubuntu'
+    package 'nfs-common' do
+      action :install
+    end
+  when 'centos', 'redhat', 'amazon'
+    package 'nfs-utils' do
+      action :install
+    end
+  else
+    raise 'Unsupported platform.  Unable to install the NetApp docker volume plug-in'
   end
 
-  Chef::Log.info("Creating a new ONTAP Cloud system - #{new_resource.ontap_name}")
-  payload = {}
-  payload['name'] = new_resource.ontap_name
-  payload['tenantId'] = get_tenant_id(new_resource.server, new_resource.tenant_name)
-  payload['region'] = new_resource.region
-  payload['vpcId'] = validate_vpc_id(new_resource.server, new_resource.region, new_resource.vpc_id)['vpcId']
-  payload['subnetId'] = validate_subnet_id(new_resource.server, new_resource.region, new_resource.vpc_id, new_resource.subnet_id)
-  payload['ebsVolumeType'] = new_resource.ebs_volume_type
+  # Download the current and most recent version of the NetApp Docker Volume Plug-in
+  #
+  # TODO: Add checks to ensure Docker version at supported levels as well
+  execute 'Install NetApp Docker Volume Plugin' do
+    command 'docker plugin install netapp/ndvp-plugin:latest --alias netapp --grant-all-permissions'
+    not_if 'docker plugin list | grep netapp:latest'
+  end
 
-  ebs_volume_metadata = {}
-  # Split the provided size into an array to have the number and letters split out.
-  ebs_volume_metadata['size'] = (ebs_volume_size.split.map { |x| x[/\d+/] }).join
-  ebs_volume_metadata['unit'] = (ebs_volume_size.split.map { |x| x[/[a-zA-Z]+/] }).join
+  execute 'Enable NetApp Docker Volume Plugin' do
+    command 'docker plugin enable netapp:latest'
+    only_if 'docker plugin list | grep netapp:latest | grep false'
+  end
 
-  payload['ebsVolumeSize'] = ebs_volume_metadata
-  payload['skipSnapshots'] = new_resource.bypass_snapshot
-  payload['dataEncryptionType'] = new_resource.data_encryption_type
-
-  vsa_metadata = {}
-  vsa_metadata['platformLicense'] = new_resource.platform_license if new_resource.platform_license
-  vsa_metadata['ontapVersion'] = new_resource.ontap_version
-  vsa_metadata['useLatestVersion'] = new_resource.use_latest
-  vsa_metadata['licenseType'] = new_resource.license_type
-  vsa_metadata['instanceType'] = new_resource.instance_type
-
-  payload['vsaMetadata'] = vsa_metadata
-  payload['svmPassword'] = new_resource.svm_password
-
-  response = new_ontap(new_resource.server, payload)
-
-  output = JSON.parse(response.body)
-  Chef::Log.info("ONTAP Cloud System deployment has started - #{output['publicId']}")
-  return new_resource.updated_by_last_action(true) unless new_resource.wait_execution
-  Chef::Log.info("Waiting on the new ONTAP Cloud system - #{new_resource.ontap_name}")
-  wait_ontap(new_resource.server, output['publicId'])
   return new_resource.updated_by_last_action(true)
 end
 
-action :wait do
+action :config do
   # Ensure that this host has OnCommand Cloud Manager up and running.  If recently started then
   # we need to wait for the service to respond.
   server_responding?(new_resource.server, 1)
@@ -149,38 +86,38 @@ action :wait do
   validate_system = get_ontap_env(new_resource.server, new_resource.ontap_name)
   raise ArgumentError, "The ONTAP Cloud System #{new_resource.ontap_name} was not found" unless validate_system
 
-  Chef::Log.info("Waiting on the new ONTAP Cloud system - #{new_resource.ontap_name}")
+  fields = %w(ontapClusterProperties svms capacityFeatures)
+  output_content = get_ontap_details(new_resource.server, validate_system['publicId'], fields)
 
-  wait_ontap(new_resource.server, validate_system['publicId'])
+  directory '/etc/netappdvp' do
+    action :create
+  end
+
+  ontap_interfaces = output_content['ontapClusterProperties']['nodes'][0]['lifs']
+  ontap_mgmt_ip = ontap_interfaces.select { |lif| lif['lifType'] == 'SVM Management' }[0]['ip']
+  ontap_data_ip = ontap_interfaces.select { |lif| lif['lifType'] == 'Data' && lif['dataProtocols'].include?('nfs') }[0]['ip']
+  ontap_aggr = output_content['svms'].detect { |svm| svm['name'] == "svm_#{new_resource.ontap_name}" }['allowedAggregates'][0]
+
+  template "/etc/netappdvp/#{new_resource.ndvp_config}" do
+    source 'netappdvp_config.json.erb'
+    variables(
+      ontap_mgmt_ip: ontap_mgmt_ip,
+      ontap_data_ip: ontap_data_ip,
+      ontap_svm_name: output_content['svmName'],
+      svm_username: 'vsadmin',
+      svm_password: new_resource.svm_password,
+      ontap_aggr: ontap_aggr,
+      size: '20GB',
+      export_policy: "export-svm_#{new_resource.ontap_name}"
+    )
+    sensitive true
+  end
+
   return new_resource.updated_by_last_action(true)
 end
 
 action :delete do
-  # Ensure that this host has OnCommand Cloud Manager up and running.  If recently started then
-  # we need to wait for the service to respond.
-  server_responding?(new_resource.server, 1)
-
-  # For some reason, the regex on the property name only works when the parameter is sent as ontap_name and not as the name property.
-  # This ensures that the validation is set correctly.
-  raise ArgumentError, "Option ontap_name's value #{new_resource.ontap_name} does not match regular expression [/^[A-Za-z][A-Za-z0-9_]{2,39}$/]" unless new_resource.ontap_name =~ /^[A-Za-z][A-Za-z0-9_]{2,39}$/
-
-  # Need to store the authentication credentials in a cookie object to be leveraged later.  Setting as a
-  # global variable since we need it in so many places.
-  @auth_cookie = authenticate_server(new_resource.server, new_resource.occm_user, new_resource.occm_password)
-
-  # Check to see if the instance already exists
-  validate_system = get_ontap_env(new_resource.server, new_resource.ontap_name)
-  unless validate_system
-    Chef::Log.info("The ONTAP Cloud System #{new_resource.ontap_name} was not found")
-    return new_resource.updated_by_last_action(false)
-  end
-
-  Chef::Log.info("Delete ONTAP Cloud system - #{new_resource.ontap_name}")
-  delete_ontap(new_resource.server, validate_system['publicId'])
-
-  Chef::Log.info("Waiting on the ONTAP Cloud system to Delete - #{new_resource.ontap_name}")
-
-  wait_ontap(new_resource.server, validate_system['publicId'], 'Delete Vsa Working Environment')
+  # Future Property that does nothing as of now
   return new_resource.updated_by_last_action(true)
 end
 
@@ -271,6 +208,17 @@ action_class do
     false
   end
 
+  def get_ontap_details(host, public_id, fields = nil)
+    uri = "https://#{host}/occm/api/vsa/working-environments/#{public_id}"
+    uri += "?fields=#{fields.join(',')}" if fields
+    url = URI.parse(uri)
+    connection = connect_server(url)
+    response = http_get(connection, url)
+    we_environment = JSON.parse(response.body)
+    return we_environment if we_environment['publicId'] == public_id
+    false
+  end
+
   def wait_ontap(host, public_id, action_type = 'Create Vsa Working Environment')
     url = URI.parse("https://#{host}/occm/api/audit?workingEnvironmentId=#{public_id}")
     connection = connect_server(url)
@@ -329,7 +277,7 @@ action_class do
   def http_get(conn, url)
     request = Net::HTTP::Get.new(url)
     request.content_type = 'application/json'
-    request['Referer'] = 'ExosphereDataLLC'
+    request['Referrer'] = 'CHEF'
     request['Cookie'] = @auth_cookie if @auth_cookie
 
     begin
@@ -344,7 +292,7 @@ action_class do
   def http_post(conn, url, body)
     request = Net::HTTP::Post.new(url)
     request.content_type = 'application/json'
-    request['Referer'] = 'ExosphereDataLLC'
+    request['Referrer'] = 'CHEF'
     request['Cookie'] = @auth_cookie if @auth_cookie
     body = body.to_json if body.is_a?(Hash)
     request.body = body
@@ -361,7 +309,7 @@ action_class do
   def http_delete(conn, url)
     request = Net::HTTP::Delete.new(url)
     request.content_type = 'application/json'
-    request['Referer'] = 'ExosphereDataLLC'
+    request['Referrer'] = 'CHEF'
     request['Cookie'] = @auth_cookie if @auth_cookie
 
     begin

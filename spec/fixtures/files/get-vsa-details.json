@@ -1,0 +1,220 @@
+{
+    "publicId": "VsaWorkingEnvironment-AtWLuhmG",
+    "name": "demolab",
+    "tenantId": "Tenant-r4OsqoHc",
+    "svmName": "svm_demolab",
+    "creatorUserEmail": "test@lab.test",
+    "status": null,
+    "awsProperties": null,
+    "reservedSize": null,
+    "encryptionProperties": null,
+    "clusterProperties": null,
+    "ontapClusterProperties": {
+        "nodes": [{
+            "name": "demolab-01",
+            "lifs": [{
+                    "ip": "10.0.0.199",
+                    "netmask": "255.255.255.0",
+                    "lifType": "Cluster Management",
+                    "dataProtocols": [],
+                    "nodeName": "demolab-01",
+                    "privateIp": true
+                },
+                {
+                    "ip": "10.0.0.183",
+                    "netmask": "255.255.255.0",
+                    "lifType": "Node Management",
+                    "dataProtocols": [],
+                    "nodeName": "demolab-01",
+                    "privateIp": true
+                },
+                {
+                    "ip": "10.0.0.220",
+                    "netmask": "255.255.255.0",
+                    "lifType": "Intercluster",
+                    "dataProtocols": [],
+                    "nodeName": "demolab-01",
+                    "privateIp": true
+                },
+                {
+                    "ip": "10.0.0.153",
+                    "netmask": "255.255.255.0",
+                    "lifType": "Data",
+                    "dataProtocols": [
+                        "iscsi"
+                    ],
+                    "nodeName": "demolab-01",
+                    "privateIp": true
+                },
+                {
+                    "ip": "10.0.0.219",
+                    "netmask": "255.255.255.0",
+                    "lifType": "Data",
+                    "dataProtocols": [
+                        "nfs",
+                        "cifs"
+                    ],
+                    "nodeName": "demolab-01",
+                    "privateIp": true
+                },
+                {
+                    "ip": "10.0.0.239",
+                    "netmask": "255.255.255.0",
+                    "lifType": "SVM Management",
+                    "dataProtocols": [],
+                    "nodeName": "demolab-01",
+                    "privateIp": true
+                }
+            ],
+            "serialNumber": "90226253282909831145",
+            "systemId": "2160133072",
+            "platformLicense": null,
+            "platformSerialNumber": "",
+            "cloudProviderId": "i-01b12b68f86357a61",
+            "healthy": true,
+            "inTakeover": false
+        }],
+        "clusterName": "demolab",
+        "ontapVersion": "9.1",
+        "systemManagerUrl": "https://10.0.0.199/sysmgr/SysMgr.html",
+        "creationTime": 1492863530229,
+        "licenseType": {
+            "name": "ONTAP Cloud Explore",
+            "capacityLimit": {
+                "size": 2,
+                "unit": "TB"
+            }
+        },
+        "lastModifiedOffbox": null,
+        "offboxTarget": true,
+        "upgradeVersions": null,
+        "writingSpeedState": "NORMAL",
+        "broadcastDomainInfos": [{
+                "broadcastDomain": "Cluster",
+                "ipSpace": "Cluster",
+                "mtu": 9000
+            },
+            {
+                "broadcastDomain": "Default",
+                "ipSpace": "Default",
+                "mtu": 1500
+            }
+        ],
+        "evaluation": false
+    },
+    "actionsRequired": null,
+    "interClusterLifs": null,
+    "cronJobSchedules": null,
+    "snapshotPolicies": null,
+    "svms": [{
+        "name": "svm_demolab",
+        "state": "running",
+        "language": "c.utf_8",
+        "allowedAggregates": [
+            "aggr1"
+        ]
+    }],
+    "activeActions": null,
+    "replicationProperties": null,
+    "schedules": null,
+    "cloudProviderName": "Amazon",
+    "isHA": false,
+    "workingEnvironmentType": "VSA",
+    "supportRegistrationProperties": null,
+    "supportRegistrationInformation": [],
+    "haProperties": null,
+    "capacityFeatures": {
+        "providerVolumesType": [{
+                "size": {
+                    "size": 100,
+                    "unit": "GB"
+                },
+                "supportedVolumeTypes": [
+                    "io1",
+                    "gp2"
+                ],
+                "maxDisksAllow": {
+                    "numOfDisks": 6,
+                    "reason": null
+                }
+            },
+            {
+                "size": {
+                    "size": 500,
+                    "unit": "GB"
+                },
+                "supportedVolumeTypes": [
+                    "io1",
+                    "gp2",
+                    "st1"
+                ],
+                "maxDisksAllow": {
+                    "numOfDisks": 3,
+                    "reason": null
+                }
+            },
+            {
+                "size": {
+                    "size": 1,
+                    "unit": "TB"
+                },
+                "supportedVolumeTypes": [
+                    "io1",
+                    "gp2",
+                    "st1"
+                ],
+                "maxDisksAllow": {
+                    "numOfDisks": 1,
+                    "reason": null
+                }
+            },
+            {
+                "size": {
+                    "size": 2,
+                    "unit": "TB"
+                },
+                "supportedVolumeTypes": [
+                    "io1",
+                    "gp2",
+                    "st1",
+                    "sc1"
+                ],
+                "maxDisksAllow": {
+                    "numOfDisks": 0,
+                    "reason": "Adding disk of 2.0 TB will cause to license capacity exceeding"
+                }
+            }
+        ],
+        "defaultProviderVolumeType": {
+            "size": {
+                "size": 100,
+                "unit": "GB"
+            },
+            "diskType": "gp2",
+            "capacityTier": null
+        },
+        "supportedCapacityTiers": [{
+                "volumeType": "standard",
+                "supportedCapacityTiers": []
+            },
+            {
+                "volumeType": "io1",
+                "supportedCapacityTiers": []
+            },
+            {
+                "volumeType": "gp2",
+                "supportedCapacityTiers": []
+            },
+            {
+                "volumeType": "st1",
+                "supportedCapacityTiers": []
+            },
+            {
+                "volumeType": "sc1",
+                "supportedCapacityTiers": []
+            }
+        ]
+    },
+    "cloudSyncProperties": null,
+    "supportedFeatures": null
+}
