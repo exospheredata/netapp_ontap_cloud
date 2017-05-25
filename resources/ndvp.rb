@@ -66,6 +66,12 @@ action :install do
     only_if 'docker plugin list | grep netapp:latest | grep false'
   end
 
+  cookbook_file '/etc/systemd/system/docker.service.d/netappdvp.conf' do
+    source 'systemd/netappdvp.override.conf'
+  end
+
+  execute 'systemctl daemon-reload'
+
   return new_resource.updated_by_last_action(true)
 end
 
