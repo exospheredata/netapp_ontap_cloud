@@ -53,6 +53,14 @@ action :install do
     raise 'Unsupported platform.  Unable to install the NetApp docker volume plug-in'
   end
 
+  service 'rpcbind' do
+    action [:enable, :start]
+  end
+
+  service 'docker' do
+    action [:enable, :start]
+  end
+
   # Download the current and most recent version of the NetApp Docker Volume Plug-in
   #
   # TODO: Add checks to ensure Docker version at supported levels as well
@@ -64,6 +72,20 @@ action :install do
   execute 'Enable NetApp Docker Volume Plugin' do
     command 'docker plugin enable netapp:latest'
     only_if 'docker plugin list | grep netapp:latest | grep false'
+  end
+
+  directory '/etc/systemd/system/docker.service.d/' do
+    recursive true
+  end
+
+  cookbook_file '/etc/systemd/system/docker.service.d/netappdvp.conf' do
+    source 'systemd/netappdvp.override.conf'
+    notifies :run, 'execute[systemctl daemon-reload]', :immediately
+  end
+
+  execute 'systemctl daemon-reload' do
+    action :nothing
+    notifies :restart, 'service[docker]', :immediately
   end
 
   return new_resource.updated_by_last_action(true)

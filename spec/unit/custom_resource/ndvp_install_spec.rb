@@ -26,10 +26,10 @@ describe 'netapp_ontap_cloud::docker_volume_plugin' do
   context 'When all attributes are default' do
     platforms = {
       'ubuntu' => {
-        'versions' => ['14.04', '16.04']
+        'versions' => %w(14.04 16.04)
       },
       'debian' => {
-        'versions' => ['6.0.5']
+        'versions' => %w(7.8)
       },
       'centos' => {
         'versions' => %w(7.1.1503 7.2.1511)

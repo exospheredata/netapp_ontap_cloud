@@ -4,7 +4,8 @@ maintainer_email 'chef@exospheredata.com'
 license 'all_rights'
 description 'Manages NetApp OnCommand Cloud Manager and ONTAP Cloud'
 long_description 'Manages NetApp OnCommand Cloud Manager and ONTAP Cloud'
-version '1.0.0'
+version '1.2.0'
+chef_version '>= 12.5' if respond_to?(:chef_version)
 
 %w(debian ubuntu centos redhat amazon).each do |os|
   supports os
