@@ -21,6 +21,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+Chef::Resource.send(:include, Occm::Helper)
+
 require 'net/http'
 require 'net/https'
 require 'uri'
@@ -105,85 +107,5 @@ end
 action_class do
   def whyrun_supported?
     true
-  end
-
-  def connect_server(url)
-    http = Net::HTTP.new(url.host, url.port)
-    http.use_ssl = true
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    http.read_timeout = 600
-    http
-  end
-
-  def server_responding?(host, wait = nil)
-    proceed = false
-    step_count = 0
-    url = URI.parse("https://#{host}/occm/api/occm/system/about")
-    connection = connect_server(url)
-    until proceed
-      begin
-        http_get(connection, nil, url)
-        return true
-      rescue Errno::EHOSTUNREACH, Errno::ETIMEDOUT, Errno::ENETUNREACH
-        Chef::Log.info('OnCommand Cloud manager service not reachable')
-        return false if wait.nil?
-        if step_count < wait
-          Chef::Log.info('Pausing for 5 seconds to retry the connection.')
-          sleep(5)
-          step_count += 1
-        else
-          Chef::Log.debug('Failed to wait for the server connection')
-          raise 'The Service never returned despite waiting patiently'
-        end
-      else
-        # In theory, we should only hit this point if the OnCommand Cloud Manager service
-        # is not running or the server is unreachable.
-        raise Exception.inspect
-      end
-    end
-  end
-
-  def server_configured?(host)
-    url = URI.parse("https://#{host}/occm/api/occm/config")
-    connection = connect_server(url)
-    response = http_get(connection, nil, url)
-    return false if JSON.parse(response.body)['message'] == 'OCCM must be setup before performing this operation.'
-    true
-  end
-
-  def setup_server(host, body)
-    url = URI.parse("https://#{host}/occm/api/occm/setup/init")
-    connection = connect_server(url)
-    http_post(connection, url, body)
-  end
-
-  def http_get(conn, _headers, url)
-    request = Net::HTTP::Get.new(url)
-    request.content_type = 'application/json'
-    request['Referer'] = 'ExosphereDataLLC'
-
-    begin
-      response = conn.start { |http| http.request(request) }
-    rescue Timeout::Error => e
-      Chef::Log.info(e.message)
-      raise "Timeout::Error: #{e.message}"
-    end
-    response
-  end
-
-  def http_post(conn, url, body)
-    request = Net::HTTP::Post.new(url)
-    request.content_type = 'application/json'
-    request['Referer'] = 'ExosphereDataLLC'
-    body = body.to_json if body.is_a?(Hash)
-    request.body = body
-
-    begin
-      response = conn.start { |http| http.request(request) }
-    rescue Timeout::Error => e
-      Chef::Log.info(e.message)
-      raise "Timeout::Error: #{e.message}"
-    end
-    response
   end
 end

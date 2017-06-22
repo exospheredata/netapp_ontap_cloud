@@ -15,12 +15,4 @@ if defined?(ChefSpec)
   def delete_netapp_ontap_cloud_ontap_aws(resource_name)
     ChefSpec::Matchers::ResourceMatcher.new(:netapp_ontap_cloud_ontap_aws, :delete, resource_name)
   end
-
-  def install_netapp_ontap_cloud_ndvp(resource_name)
-    ChefSpec::Matchers::ResourceMatcher.new(:netapp_ontap_cloud_ndvp, :install, resource_name)
-  end
-
-  def config_netapp_ontap_cloud_ndvp(resource_name)
-    ChefSpec::Matchers::ResourceMatcher.new(:netapp_ontap_cloud_ndvp, :config, resource_name)
-  end
 end

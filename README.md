@@ -12,61 +12,23 @@ This cookbook installs, configures and manages NetApp OnCommand Cloud Manager sy
   - [Cookbooks](#cookbooks)
   - [Data bags](#data-bags)
   - [Amazon Web Services](#amazon-web-services)
-    - [OnCommand Cloud Manager for AWS Machine Image](#oncommand-cloud-manager-for-aws-machine-image)
-    - [ONTAP Cloud for AWS](#ontap-cloud-for-aws)
-    - [Cloud Manager Admin credentials for AWS](#cloud-manager-admin-credentials-for-aws)
 - [Node Attributes](#node-attributes)
   - [OnCommand Cloud Manager](#oncommand-cloud-manager)
   - [ONTAP Cloud](#ontap-cloud)
 - [Custom Resource](#custom-resource)
   - [netapp_ontap_cloud_occm](#netapp_ontap_cloud_occm)
-    - [Action :setup](#action-setup)
-      - [Properties](#properties)
-        - [Server Configuration properties](#server-configuration-properties)
-        - [User Management properties](#user-management-properties)
-        - [Tenant properties](#tenant-properties)
-        - [AWS properties](#aws-properties)
-      - [Examples](#examples)
-        - [Configure a minimal installation of Cloud Manager without AWS credentials](#configure-a-minimal-installation-of-cloud-manager-without-aws-credentials)
   - [netapp_ontap_cloud_ontap_aws](#netapp_ontap_cloud_ontap_aws)
-    - [Action :create](#action-create)
-      - [Properties](#properties-1)
-        - [OnCommand Cloud Manager properties](#oncommand-cloud-manager-properties)
-        - [Amazon Web Services properties](#amazon-web-services-properties)
-        - [ONTAP Instance properties](#ontap-instance-properties)
-        - [CHEF properties](#chef-properties)
-      - [Examples](#examples-1)
-        - [Deploy ONTAP Cloud instance and wait for launch to complete](#deploy-ontap-cloud-instance-and-wait-for-launch-to-complete)
-    - [Action :wait](#action-wait)
-      - [Properties](#properties-2)
-        - [OnCommand Cloud Manager properties](#oncommand-cloud-manager-properties-1)
-    - [Action :delete](#action-delete)
-      - [Properties](#properties-3)
-        - [OnCommand Cloud Manager properties](#oncommand-cloud-manager-properties-2)
-        - [CHEF properties](#chef-properties-1)
-      - [Examples](#examples-2)
-        - [Delete ONTAP Cloud instance and wait for completion](#delete-ontap-cloud-instance-and-wait-for-completion)
-  - [netapp_ontap_cloud_ndvp](#netapp_ontap_cloud_ndvp)
-    - [Action :config (default)](#action-config-default)
-      - [Properties](#properties-4)
-        - [OnCommand Cloud Manager properties](#oncommand-cloud-manager-properties-3)
-        - [ONTAP Instance properties](#ontap-instance-properties-1)
-        - [NetApp Docker Volume  properties](#netapp-docker-volume--properties)
-    - [Action :install](#action-install)
-      - [Properties](#properties-5)
-    - [Action :delete](#action-delete-1)
-      - [Examples](#examples-3)
-        - [Configure and Install the NetApp Docker Volume Plug-in with a default configuration file.](#configure-and-install-the-netapp-docker-volume-plug-in-with-a-default-configuration-file)
+  - [netapp_ontap_cloud_ndvp (deprecated)](#netapp_ontap_cloud_ndvp-deprecated)
 - [Recipes](#recipes)
   - [default](#default)
   - [occm_install](#occm_install)
   - [occm_setup](#occm_setup)
   - [ontap_cloud_aws_standalone](#ontap_cloud_aws_standalone)
   - [ontap_cloud_aws_standalone_delete](#ontap_cloud_aws_standalone_delete)
-  - [docker_volume_plugin](#docker_volume_plugin)
 - [Upload to Chef Server](#upload-to-chef-server)
 - [Matchers/Helpers](#matchershelpers)
   - [Matchers](#matchers)
+  - [Helpers](#helpers)
 - [Cookbook Testing](#cookbook-testing)
   - [OnCommand Cloud Manager software](#oncommand-cloud-manager-software)
   - [Before you begin](#before-you-begin)
@@ -333,64 +295,9 @@ end
 
 ```
 
-### netapp_ontap_cloud_ndvp
-Deploys and configures the NetApp Docker Volume Plug-in and creates a connection to the ONTAP Cloud system selected.
+### netapp_ontap_cloud_ndvp (deprecated)
+This resource was removed and is available in the [Netapp Docker cookbook](https://github.com/exospheredata/netapp_docker)
 
-_NOTE: Requires that the host already installs Docker Engine 17.03+_
-#### Action :config (default)
----
-Determines the configuration details of the selected ONTAP Cloud system and creates the required configuration file for the ONTAP Cloud system based on details from the OnCommand Cloud Manager system.
-
-##### Properties
-_NOTE: properties in bold are required_
-
-###### OnCommand Cloud Manager properties
-
-| Property | Type | Description |
-| ------------- |-------------|-------------|
-| **`server`** | String | Hostname or IP address of the OnCommand Cloud Manager system |
-| **`occm_user`** | String | Email address of the OCCM user |
-| **`occm_password`** | String | Password for the user supplied |
-| **`ontap_name`** | String | **NAME Property.**  The name of the ONTAP Cloud system to be connected.  This is the name property for the resource block. <br><br> **Value must match regex: [/^[A-Za-z][A-Za-z0-9_]{2,39}$/]**|
-| **`tenant_name`** | String | Future property |
-
-###### ONTAP Instance properties
-
-| Property | Type | Description |
-| ------------- |-------------|-------------|
-| **`svm_password`** | String | Sets the password on the cluster admin account for the ONTAP Cloud system.  Sensitve and will not print in the logs. |
-
-###### NetApp Docker Volume  properties
-
-| Property | Type | Description |
-| ------------- |-------------|-------------|
-| **`ndvp_config`** | String | Name for the configuration file and will be saved to `/etc/netappdvp`.  Default value is 'config.json'.|
-
-
-#### Action :install
----
-Installs the NFS client package for the host and installs the current version of the NetApp Docker Volume Plug-in
-
-##### Properties
-_NOTE: None. Expects that the configuration is complete_
-
-#### Action :delete
----
-Future action and currently not implemented.
-
-##### Examples
-###### Configure and Install the NetApp Docker Volume Plug-in with a default configuration file.
-```ruby
-netapp_ontap_cloud_ndvp 'myontap' do
-  server 'localhost'
-  occm_user 'occm@lab.test'
-  occm_password 'Netapp1'
-  tenant_name 'Default Tenant'
-  svm_password 'Netapp123'
-  action [:config, :install]
-end
-
-```
 
 ## Recipes
 ### default
@@ -413,11 +320,6 @@ Configures NetApp OnCommand Cloud Manager service using the default configuratio
 
 Removes an existing standalone ONTAP Cloud for AWS system.
 
-### docker_volume_plugin
-
-Installs and configures NFS and the NetApp Docker Volume Plug-in on the host to which this recipe is run.
-
-_NOTE: Requires that the host already installs Docker Engine 17.03+_
 
 ## Upload to Chef Server
 This cookbook should be included in each organization of your CHEF environment.  When importing, leverage Berkshelf:
@@ -441,9 +343,8 @@ _Note: Matchers should always be created in `libraries/matchers.rb` and used for
 * `create_netapp_ontap_cloud_ontap_aws(resource_name)`
 * `delete_netapp_ontap_cloud_ontap_aws(resource_name)`
 
-**Tests the LWRP (netapp_ontap_cloud_ndvp) with an action**
-* `install_netapp_ontap_cloud_ndvp(resource_name)`
-* `config_netapp_ontap_cloud_ndvp(resource_name)`
+### Helpers
+* Occm::Helper - A library of helper functions to interface with OnCommand Cloud Manager.  This library can be included in recipes to perform commands and lookups of OCCM actions and resources.
 
 ## Cookbook Testing
 

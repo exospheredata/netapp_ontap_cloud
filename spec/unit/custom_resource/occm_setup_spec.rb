@@ -69,7 +69,7 @@ describe 'netapp_ontap_cloud::occm_setup' do
             stub_request(:post, 'https://localhost/occm/api/occm/setup/init')
               .to_return(status: 400, body: JSON.generate('message' => 'bad data', 'violations' => 'everything'),
                          headers: { 'Content-Type' => 'application/json' })
-            expect { chef_run }.to raise_error(ArgumentError, /OCCM Setup command returned an http error 400/)
+            expect { chef_run }.to raise_error(ArgumentError, /OnCommand Cloud Manager - Bad HTTP request error 400/)
           end
           it 'should raise an RuntimeError if setup returns HTTPClientError or HTTPInternalServerError' do
             stub_request(:post, 'https://localhost/occm/api/occm/setup/init')
