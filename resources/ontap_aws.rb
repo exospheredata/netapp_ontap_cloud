@@ -67,7 +67,13 @@ property :svm_password, String, required: true, identity: false, sensitive: true
 
 # Maps to skipSnapshots to override if an EBS snapshot should be taken on first deploy
 property :bypass_snapshot, [TrueClass, FalseClass], default: false
-property :data_encryption_type, String, equal_to: ['NONE', ' AWS', ' ONTAP'], default: 'NONE'
+property :data_encryption_type, String, equal_to: %w(NONE AWS ONTAP), default: 'NONE'
+
+# Sets the writing speed for the ONTAP Cloud system.
+#
+# WARNING: Changing the write speed of a running ONTAP Cloud system will require that the system reboot
+# this will cause an outage to any existing connected clients and servers.
+property :write_speed, [String, nil], equal_to: %w(normal high)
 
 # This can be used with resource actions like :create to force the process to wait until after the exeuction
 # of the job before moving on.
@@ -123,6 +129,7 @@ action :create do
 
   payload['vsaMetadata'] = vsa_metadata
   payload['svmPassword'] = new_resource.svm_password
+  payload['writingSpeedState'] = new_resource.write_speed.upcase if new_resource.write_speed
 
   response = new_ontap(new_resource.server, payload)
 
@@ -130,11 +137,11 @@ action :create do
   Chef::Log.info("ONTAP Cloud System deployment has started - #{output['publicId']}")
   return new_resource.updated_by_last_action(true) unless new_resource.wait_execution
   Chef::Log.info("Waiting on the new ONTAP Cloud system - #{new_resource.ontap_name}")
-  wait_ontap(new_resource.server, output['publicId'])
+  wait_ontap(new_resource.server, response['Oncloud-Request-Id'])
   return new_resource.updated_by_last_action(true)
 end
 
-action :wait do
+action :set_write_speed do
   # Ensure that this host has OnCommand Cloud Manager up and running.  If recently started then
   # we need to wait for the service to respond.
   server_responding?(new_resource.server, 1)
@@ -149,11 +156,19 @@ action :wait do
 
   # Check to see if the instance already exists
   validate_system = get_ontap_env(new_resource.server, new_resource.ontap_name, @auth_cookie)
-  raise ArgumentError, "The ONTAP Cloud System #{new_resource.ontap_name} was not found" unless validate_system
+  unless validate_system
+    Chef::Log.info("The ONTAP Cloud System #{new_resource.ontap_name} was not found")
+    return new_resource.updated_by_last_action(false)
+  end
 
   Chef::Log.info("Waiting on the new ONTAP Cloud system - #{new_resource.ontap_name}")
 
-  wait_ontap(new_resource.server, validate_system['publicId'])
+  payload = {}
+  payload['writingSpeedState'] = new_resource.write_speed.upcase
+  response = set_write_speed(new_resource.server, validate_system['publicId'], payload)
+
+  Chef::Log.info('ONTAP Cloud write speed has been set.  The system will now reboot.')
+  wait_ontap(new_resource.server, response['Oncloud-Request-Id'])
   return new_resource.updated_by_last_action(true)
 end
 
@@ -178,11 +193,11 @@ action :delete do
   end
 
   Chef::Log.info("Delete ONTAP Cloud system - #{new_resource.ontap_name}")
-  delete_ontap(new_resource.server, validate_system['publicId'])
+  response = delete_ontap(new_resource.server, validate_system['publicId'])
 
   Chef::Log.info("Waiting on the ONTAP Cloud system to Delete - #{new_resource.ontap_name}")
 
-  wait_ontap(new_resource.server, validate_system['publicId'], 'Delete Vsa Working Environment')
+  wait_ontap(new_resource.server, response['Oncloud-Request-Id'])
   return new_resource.updated_by_last_action(true)
 end
 
@@ -202,6 +217,17 @@ action_class do
     http_response_check(response)
   end
 
+  def set_write_speed(host, public_id, body)
+    url = URI.parse("https://#{host}/occm/api/vsa/working-environments/#{public_id}/writing-speed")
+    begin
+      connection = connect_server(url)
+    rescue
+      raise connection.inspect
+    end
+    response = http_put(connection, url, body, auth_cookie: @auth_cookie)
+    http_response_check(response)
+  end
+
   def delete_ontap(host, public_id)
     url = URI.parse("https://#{host}/occm/api/vsa/working-environments/#{public_id}")
     begin
@@ -213,28 +239,27 @@ action_class do
     http_response_check(response)
   end
 
-  def wait_ontap(host, public_id, action_type = 'Create Vsa Working Environment')
-    url = URI.parse("https://#{host}/occm/api/audit?workingEnvironmentId=#{public_id}")
+  def wait_ontap(host, request_id)
+    url = URI.parse("https://#{host}/occm/api/audit/#{request_id}")
     connection = connect_server(url)
+    Chef::Log.info('Waiting for completion of OnCommand Cloud Manager process')
+
     counter = 0
     while counter < 90 # This provides a wait period of 45mins in the event it takes a long time to execute
       response = http_get(connection, url, auth_cookie: @auth_cookie)
-      we_env = JSON.parse(response.body)
-      we_env.each do |log|
-        next unless log['actionName'] == action_type
-        case log['status']
-        when 'Success'
-          return true
-        when 'Failed'
-          raise log['errorMessage']
-        else
-          Chef::Log.info('Waiting for completion of OnCommand Cloud Manager process')
-          puts JSON.pretty_generate(log['records'].first)
-          sleep(30)
-          counter += 1
-        end
+      log = JSON.parse(response.body)[0]
+      case log['status']
+      when 'Success'
+        Chef::Log.info("-- Final action: #{log['records'].first['actionName']}")
+        return true
+      when 'Failed'
+        raise log['errorMessage']
+      else
+        Chef::Log.info("-- Current action: #{log['records'].first['actionName']}")
+        sleep(30)
+        counter += 1
       end
     end
-    raise 'Failed to wait for ONTAP Cloud system'
+    raise 'Failed to wait for aggregate process'
   end
 end

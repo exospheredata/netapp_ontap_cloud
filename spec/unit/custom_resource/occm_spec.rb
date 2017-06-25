@@ -6,7 +6,7 @@
 
 require 'spec_helper'
 
-describe 'netapp_ontap_cloud::occm_setup' do
+describe 'netapp_ontap_cloud_test::occm' do
   before do
     stub_data_bag_item('occm', 'aws').and_return(id: 'aws', aws_access_key: 'testkey', aws_secret_key: 'nopass')
     stub_data_bag_item('occm', 'admin_credentials').and_return(id: 'admin_credentials', email_address: 'test@lab.test', password: 'Netapp1')
@@ -23,6 +23,10 @@ describe 'netapp_ontap_cloud::occm_setup' do
         context "On #{platform} #{version}" do
           before do
             Fauxhai.mock(platform: platform, version: version)
+            node.normal['occm']['user']['email_address'] = 'test@lab.test'
+            node.normal['occm']['user']['password'] = 'password'
+            node.normal['occm']['company_name'] = 'My Company'
+
             # we are using the WebMock gem to create our Net::Http stubs
             stub_request(:get, 'https://localhost/occm/api/occm/system/about')
             stub_request(:get, 'https://localhost/occm/api/occm/config')
@@ -32,20 +36,27 @@ describe 'netapp_ontap_cloud::occm_setup' do
               .to_return(status: 200, body: JSON.generate('upgradeExecuted' => 'true'),
                          headers: { 'Content-Type' => 'application/json' })
           end
-          let(:chef_run) do
-            ChefSpec::SoloRunner.new(platform: platform, version: version, file_cache_path: '/tmp/cache', step_into: ['netapp_ontap_cloud_occm']) do |node|
-              node.normal['occm']['user']['email_address'] = 'test@lab.test'
-              node.normal['occm']['user']['password'] = 'password'
-              node.normal['occm']['company_name'] = 'My Company'
-            end.converge(described_recipe)
-          end
           let(:occm_installer) { ::File.join(Chef::Config[:file_cache_path], 'OnCommandCloudManager-V3.2.0.sh') }
+          let(:runner) do
+            ChefSpec::SoloRunner.new(platform: platform, version: version, file_cache_path: '/tmp/cache', step_into: ['netapp_ontap_cloud_occm'])
+          end
+          let(:node) { runner.node }
+          let(:chef_run) { runner.converge(described_recipe) }
 
           it 'converges successfully' do
             expect { chef_run }.to_not raise_error
+            expect(chef_run).to setup_netapp_ontap_cloud_occm('Setup Cloud Manager')
             # Verify that the process was complete and update == True
             resource = chef_run.netapp_ontap_cloud_occm('Setup Cloud Manager')
             expect(resource.updated_by_last_action?).to be true
+          end
+          it 'it installs OnCommand Cloud manager if instructed' do
+            node.normal['occm']['install_pkg'] = true
+            expect(chef_run).to include_recipe('netapp_ontap_cloud::occm_install')
+            expect(chef_run).to create_cookbook_file(occm_installer)
+            expect(chef_run).to enable_service('occm')
+            expect(chef_run).to start_service('occm')
+            expect(chef_run).to run_execute("sh #{occm_installer} silent")
           end
           it 'should skip setup if server_configured' do
             stub_request(:get, 'https://localhost/occm/api/occm/config')

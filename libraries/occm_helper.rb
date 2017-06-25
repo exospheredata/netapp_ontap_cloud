@@ -1,6 +1,5 @@
 module Occm
   module Helper
-
     ##########
     # OnCommand Cloud Manager Methods
     ##########
@@ -92,6 +91,16 @@ module Occm
       false
     end
 
+    def get_aggregate_details(host, public_id, auth_token)
+      uri = "https://#{host}/occm/api/vsa/aggregates?workingEnvironmentId=#{public_id}"
+      url = URI.parse(uri)
+      connection = connect_server(url)
+      response = http_get(connection, url, auth_cookie: auth_token)
+      we_environment = JSON.parse(response.body)
+      return we_environment if we_environment
+      false
+    end
+
     def get_tenant_id(host, tenant_name, auth_token)
       url = URI.parse("https://#{host}/occm/api/tenants")
       connection = connect_server(url)
@@ -146,6 +155,23 @@ module Occm
 
     def http_post(conn, url, body, auth_cookie: nil)
       request = Net::HTTP::Post.new(url)
+      request.content_type = 'application/json'
+      request['Referrer'] = 'ExosphereDataLLC'
+      request['Cookie'] = auth_cookie if auth_cookie
+      body = body.to_json if body.is_a?(Hash)
+      request.body = body
+
+      begin
+        response = conn.start { |http| http.request(request) }
+      rescue Timeout::Error => e
+        Chef::Log.info(e.message)
+        raise "Timeout::Error: #{e.message}"
+      end
+      http_response_check(response)
+    end
+
+    def http_put(conn, url, body, auth_cookie: nil)
+      request = Net::HTTP::Put.new(url)
       request.content_type = 'application/json'
       request['Referrer'] = 'ExosphereDataLLC'
       request['Cookie'] = auth_cookie if auth_cookie

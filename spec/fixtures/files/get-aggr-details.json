@@ -1,0 +1,58 @@
+[
+  {
+    "name": "aggr1",
+    "availableCapacity": {
+      "size": 906.17,
+      "unit": "GB"
+    },
+    "totalCapacity": {
+      "size": 907.18,
+      "unit": "GB"
+    },
+    "volumes": [
+      {
+        "name": "svm_jgoodrum01_root",
+        "totalSize": {
+          "size": 1,
+          "unit": "GB"
+        },
+        "usedSize": {
+          "size": 0.00019073486328125,
+          "unit": "GB"
+        },
+        "thinProvisioned": false,
+        "rootVolume": true
+      }
+    ],
+    "providerVolumes": [
+      {
+        "id": "vol-06f5473b08491eac1",
+        "name": "vol-06f5473b08491eac1",
+        "size": {
+          "size": 1,
+          "unit": "TB"
+        },
+        "state": "in-use",
+        "device": "/dev/xvdg",
+        "instanceId": "i-0ed9d4ce8195a6050",
+        "diskType": "gp2",
+        "encrypted": false
+      }
+    ],
+    "disks": [
+      {
+        "name": "NET-1.2",
+        "position": "data",
+        "ownerNode": "jgoodrum01-01",
+        "device": "xvdg"
+      }
+    ],
+    "state": "online",
+    "encryptionType": "notEncrypted",
+    "encryptionKeyId": null,
+    "isRoot": false,
+    "homeNode": "jgoodrum01-01",
+    "ownerNode": "jgoodrum01-01",
+    "capacityTier": null
+  }
+]

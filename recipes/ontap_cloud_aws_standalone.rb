@@ -48,6 +48,7 @@ netapp_ontap_cloud_ontap_aws 'Setup ONTAP Cloud' do
   ebs_volume_size node['ontap_cloud']['ontap']['standalone']['size']
   instance_type node['ontap_cloud']['ontap']['standalone']['instance_type']
   license_type node['ontap_cloud']['ontap']['standalone']['license_type']
+  write_speed node['ontap_cloud']['ontap']['standalone']['write_speed']
   bypass_snapshot true
   wait_execution true
   action :create

@@ -1,0 +1,562 @@
+[{
+    "_id": 21,
+    "id": "AuditGroup$-LmSYnwG2",
+    "requestId": "Cod33Rmu",
+    "startDate": 1498353104151,
+    "endDate": 1498353176096,
+    "actionName": "Create Aggregate",
+    "status": "Success",
+    "userName": "occm admin",
+    "tenantName": "Default Tenant",
+    "workingEnvironmentName": "jgoodrum01",
+    "actionParameters": "{\"providerVolumeType\":\"gp2\",\"name\":\"aggr2\",\"diskSize\":{\"size\":\"100\",\"unit\":\"GB\"},\"homeNode\":\"jgoodrum01-01\",\"numberOfDisks\":\"1\",\"workingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\"}",
+    "records": [{
+        "id": "AuditGroupRecord$-57cBbOGX",
+        "date": 1498353176088,
+        "actionName": "Describe SVM",
+        "status": "Success",
+        "parameters": "{\"svmName\":\"svm_jgoodrum01\",\"_cluster\":\"10.100.1.28\",\"_result\":{\"svmType\":\"data\",\"svmState\":\"running\",\"allowedProtocols\":[\"nfs\",\"cifs\",\"iscsi\"],\"svmName\":\"svm_jgoodrum01\",\"language\":\"c.utf_8\",\"allowedAggregates\":[\"aggr1\",\"aggr1_small\",\"aggr2\"]}}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-NrN3OaZu",
+        "date": 1498353176040,
+        "actionName": "Add SVM Aggregates",
+        "status": "Success",
+        "parameters": "{\"svmName\":\"svm_jgoodrum01\",\"aggregates\":[\"aggr2\"],\"_cluster\":\"10.100.1.28\",\"_result\":\"passed\"}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-IRO5YIAq",
+        "date": 1498353175980,
+        "actionName": "Describe Cluster Volumes",
+        "status": "Success",
+        "parameters": "{\"_cluster\":\"10.100.1.28\",\"_result\":[{\"name\":\"vol0\",\"sizeTotal\":{\"size\":74866024448,\"unit\":\"Byte\"},\"autoSizeMode\":\"off\",\"state\":\"online\",\"usedSize\":{\"size\":6.5892352E+8,\"unit\":\"Byte\"},\"exportPolicy\":\"\",\"securityStyle\":\"\",\"thinProvisioning\":false,\"languageCode\":\"\",\"aggregateName\":\"aggr0\",\"volumeType\":\"rw\",\"maxGrowSize\":{\"size\":8.983922688E+10,\"unit\":\"Byte\"},\"svmName\":\"jgoodrum01-01\",\"junctionPath\":\"\",\"tieringPolicy\":null,\"snapshotPolicy\":\"\",\"compressionSpaceSaved\":{\"size\":0.0,\"unit\":\"Byte\"},\"clonedFromSnapshot\":null,\"parentVolumeName\":\"\",\"deduplicationSpaceSaved\":{\"size\":0.0,\"unit\":\"Byte\"},\"isVserverRoot\":false,\"creationTime\":1498348979},{\"name\":\"svm_jgoodrum01_root\",\"sizeTotal\":{\"size\":1073741824,\"unit\":\"Byte\"},\"autoSizeMode\":\"off\",\"state\":\"online\",\"usedSize\":{\"size\":352256.0,\"unit\":\"Byte\"},\"exportPolicy\":\"export-svm_jgoodrum01\",\"securityStyle\":\"unix\",\"thinProvisioning\":false,\"languageCode\":\"c.utf_8\",\"aggregateName\":\"aggr1\",\"volumeType\":\"rw\",\"maxGrowSize\":{\"size\":1288486912,\"unit\":\"Byte\"},\"svmName\":\"svm_jgoodrum01\",\"junctionPath\":\"/\",\"tieringPolicy\":null,\"snapshotPolicy\":\"default\",\"compressionSpaceSaved\":{\"size\":0.0,\"unit\":\"Byte\"},\"clonedFromSnapshot\":null,\"parentVolumeName\":\"\",\"deduplicationSpaceSaved\":{\"size\":0.0,\"unit\":\"Byte\"},\"isVserverRoot\":true,\"creationTime\":1498349284}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-aN1kEunk",
+        "date": 1498353175919,
+        "actionName": "Describe SVMs",
+        "status": "Success",
+        "parameters": "{\"_cluster\":\"10.100.1.28\",\"_result\":[{\"svmType\":\"system\",\"svmState\":\"undefined\",\"allowedProtocols\":[],\"svmName\":\"Cluster\",\"language\":\"\",\"allowedAggregates\":[]},{\"svmType\":\"admin\",\"svmState\":\"undefined\",\"allowedProtocols\":[],\"svmName\":\"jgoodrum01\",\"language\":\"en_us\",\"allowedAggregates\":[]},{\"svmType\":\"node\",\"svmState\":\"undefined\",\"allowedProtocols\":[],\"svmName\":\"jgoodrum01-01\",\"language\":\"c\",\"allowedAggregates\":[]},{\"svmType\":\"data\",\"svmState\":\"running\",\"allowedProtocols\":[\"nfs\",\"cifs\",\"iscsi\"],\"svmName\":\"svm_jgoodrum01\",\"language\":\"c.utf_8\",\"allowedAggregates\":[\"aggr1\",\"aggr1_small\"]}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-4GXwCOgO",
+        "date": 1498353175880,
+        "actionName": "Describe Ontap Version",
+        "status": "Success",
+        "parameters": "{\"_cluster\":\"10.100.1.28\",\"_result\":{\"generation\":9,\"major\":1,\"minor\":0}}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-9JXZ0SN5",
+        "date": 1498353175809,
+        "actionName": "Describe Identity Data",
+        "status": "Success",
+        "parameters": "{\"_result\":{\"instanceId\":\"i-0a8b373ab182e3547\",\"devpayProductCodes\":null,\"billingProducts\":[\"bp-6fa54006\"],\"availabilityZone\":\"us-east-1b\",\"accountId\":\"XXXXXXXXXXXX\",\"ramdiskId\":null,\"architecture\":\"x86_64\",\"instanceType\":\"t2.medium\",\"version\":\"2010-08-31\",\"pendingTime\":\"2017-06-24T23:50:45Z\",\"imageId\":\"ami-6c65a27a\",\"privateIp\":\"10.100.1.101\",\"region\":\"us-east-1\",\"kernelId\":null}}",
+        "errorMessage": null,
+        "count": 2
+    }, {
+        "id": "AuditGroupRecord$-ZuMRyMI5",
+        "date": 1498353175802,
+        "actionName": "Describe Instances With Filter",
+        "status": "Success",
+        "parameters": "{\"key\":\"tag:aws:cloudformation:stack-id\",\"value\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"_region\":\"us-east-1\",\"_result\":[{\"instanceId\":\"i-0edccc1a4166e9493\",\"name\":\"jgoodrum01\",\"publicDnsName\":\"\",\"keyPair\":null,\"state\":\"running\",\"vpcId\":\"vpc-07fa467e\",\"tags\":{\"Name\":\"jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\",\"aws:cloudformation:stack-name\":\"jgoodrum01\",\"aws:cloudformation:logical-id\":\"DotInstance\",\"aws:cloudformation:stack-id\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"WorkingEnvironment\":\"jgoodrum01\",\"CloudONTAP.serial-number\":\"902XXXXXXXXXXXX37211\"},\"publicIpAddress\":null,\"availabilityZone\":\"us-east-1b\",\"subnetId\":\"subnet-877f6ae2\",\"instanceType\":\"m4.xlarge\",\"privateDnsName\":\"ip-10-100-1-34.ec2.internal\",\"tenancy\":\"default\",\"imageId\":\"ami-b2b843a4\",\"ipAddress\":\"10.100.1.34\",\"productCodes\":[{\"productCodeId\":\"bk9ifwvjadm70j0qym0ui6msi\",\"productCodeType\":\"marketplace\"}],\"instanceProfileId\":null,\"privateIpAddress\":\"10.100.1.34\",\"devices\":[\"/dev/sda1\",\"/dev/xvdf\",\"/dev/xvdg\",\"/dev/xvdh\",\"/dev/xvdi\"]}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-dDLnmfsc",
+        "date": 1498353175712,
+        "actionName": "Describe Disks",
+        "status": "Success",
+        "parameters": "{\"_cluster\":\"10.100.1.28\",\"_result\":[{\"name\":\"NET-1.4\",\"pathInfos\":[{\"device\":\"xvdh\",\"initiatorPort\":\"0a\",\"node\":\"jgoodrum01-01\"}],\"aggregateName\":\"aggr1_small\",\"ownerNode\":\"jgoodrum01-01\",\"position\":\"data\"},{\"name\":\"NET-1.2\",\"pathInfos\":[{\"device\":\"xvdg\",\"initiatorPort\":\"0a\",\"node\":\"jgoodrum01-01\"}],\"aggregateName\":\"aggr1\",\"ownerNode\":\"jgoodrum01-01\",\"position\":\"data\"},{\"name\":\"NET-1.5\",\"pathInfos\":[{\"device\":\"xvdi\",\"initiatorPort\":\"0a\",\"node\":\"jgoodrum01-01\"}],\"aggregateName\":\"aggr2\",\"ownerNode\":\"jgoodrum01-01\",\"position\":\"data\"},{\"name\":\"NET-1.1\",\"pathInfos\":[{\"device\":\"xvdf\",\"initiatorPort\":\"0a\",\"node\":\"jgoodrum01-01\"}],\"aggregateName\":\"aggr0\",\"ownerNode\":\"jgoodrum01-01\",\"position\":\"data\"}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-cNBjpscV",
+        "date": 1498353175631,
+        "actionName": "Describe Aggregates",
+        "status": "Success",
+        "parameters": "{\"_cluster\":\"10.100.1.28\",\"_result\":[{\"isRoot\":true,\"name\":\"aggr0\",\"mirrored\":false,\"state\":\"online\",\"encryptionKeyId\":null,\"homeNode\":\"jgoodrum01-01\",\"availableCapacity\":{\"size\":57869377536,\"unit\":\"Byte\"},\"isSidl\":false,\"raidStatus\":[\"raid0\",\" normal\"],\"isComposite\":false,\"encrypted\":false,\"totalCapacity\":{\"size\":133151555584,\"unit\":\"Byte\"},\"ownerNode\":\"jgoodrum01-01\"},{\"isRoot\":false,\"name\":\"aggr1\",\"mirrored\":false,\"state\":\"online\",\"encryptionKeyId\":null,\"homeNode\":\"jgoodrum01-01\",\"availableCapacity\":{\"size\":972990255104,\"unit\":\"Byte\"},\"isSidl\":false,\"raidStatus\":[\"raid0\",\" normal\"],\"isComposite\":false,\"encrypted\":false,\"totalCapacity\":{\"size\":974072610816,\"unit\":\"Byte\"},\"ownerNode\":\"jgoodrum01-01\"},{\"isRoot\":false,\"name\":\"aggr1_small\",\"mirrored\":false,\"state\":\"online\",\"encryptionKeyId\":null,\"homeNode\":\"jgoodrum01-01\",\"availableCapacity\":{\"size\":85898653696,\"unit\":\"Byte\"},\"isSidl\":false,\"raidStatus\":[\"raid0\",\" normal\"],\"isComposite\":false,\"encrypted\":false,\"totalCapacity\":{\"size\":95100821504,\"unit\":\"Byte\"},\"ownerNode\":\"jgoodrum01-01\"},{\"isRoot\":false,\"name\":\"aggr2\",\"mirrored\":false,\"state\":\"online\",\"encryptionKeyId\":null,\"homeNode\":\"jgoodrum01-01\",\"availableCapacity\":{\"size\":95100690432,\"unit\":\"Byte\"},\"isSidl\":false,\"raidStatus\":[\"raid0\",\" normal\"],\"isComposite\":false,\"encrypted\":false,\"totalCapacity\":{\"size\":95100821504,\"unit\":\"Byte\"},\"ownerNode\":\"jgoodrum01-01\"}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-abTu1mHo",
+        "date": 1498353175557,
+        "actionName": "Create Aggregate",
+        "status": "Success",
+        "parameters": "{\"_result\":\"passed\",\"mirrorDisks\":null,\"aggregateName\":\"aggr2\",\"diskNames\":[\"NET-1.5\"],\"encrypted\":false,\"_cluster\":\"10.100.1.28\"}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-D07DtmUj",
+        "date": 1498353169374,
+        "actionName": "Describe SVMs",
+        "status": "Success",
+        "parameters": "{\"_cluster\":\"10.100.1.28\",\"_result\":[{\"svmType\":\"system\",\"svmState\":\"undefined\",\"allowedProtocols\":[],\"svmName\":\"Cluster\",\"language\":\"\",\"allowedAggregates\":[]},{\"svmType\":\"admin\",\"svmState\":\"undefined\",\"allowedProtocols\":[],\"svmName\":\"jgoodrum01\",\"language\":\"en_us\",\"allowedAggregates\":[]},{\"svmType\":\"node\",\"svmState\":\"undefined\",\"allowedProtocols\":[],\"svmName\":\"jgoodrum01-01\",\"language\":\"c\",\"allowedAggregates\":[]},{\"svmType\":\"data\",\"svmState\":\"running\",\"allowedProtocols\":[\"nfs\",\"cifs\",\"iscsi\"],\"svmName\":\"svm_jgoodrum01\",\"language\":\"c.utf_8\",\"allowedAggregates\":[\"aggr1\",\"aggr1_small\"]}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-hg5Fjh9m",
+        "date": 1498353169336,
+        "actionName": "Describe Instance Status",
+        "status": "Success",
+        "parameters": "{\"instanceId\":\"i-0edccc1a4166e9493\",\"_region\":\"us-east-1\",\"_result\":{\"instanceId\":\"i-0edccc1a4166e9493\",\"status\":\"running\",\"instanceStatus\":\"ok\",\"systemStatus\":\"ok\"}}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-FaIvQHUh",
+        "date": 1498353169052,
+        "actionName": "Describe Instances With Filter",
+        "status": "Success",
+        "parameters": "{\"key\":\"tag:aws:cloudformation:stack-id\",\"value\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"_region\":\"us-east-1\",\"_result\":[{\"instanceId\":\"i-0edccc1a4166e9493\",\"name\":\"jgoodrum01\",\"publicDnsName\":\"\",\"keyPair\":null,\"state\":\"running\",\"vpcId\":\"vpc-07fa467e\",\"tags\":{\"Name\":\"jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\",\"aws:cloudformation:stack-name\":\"jgoodrum01\",\"aws:cloudformation:logical-id\":\"DotInstance\",\"aws:cloudformation:stack-id\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"WorkingEnvironment\":\"jgoodrum01\",\"CloudONTAP.serial-number\":\"902XXXXXXXXXXXX37211\"},\"publicIpAddress\":null,\"availabilityZone\":\"us-east-1b\",\"subnetId\":\"subnet-877f6ae2\",\"instanceType\":\"m4.xlarge\",\"privateDnsName\":\"ip-10-100-1-34.ec2.internal\",\"tenancy\":\"default\",\"imageId\":\"ami-b2b843a4\",\"ipAddress\":\"10.100.1.34\",\"productCodes\":[{\"productCodeId\":\"bk9ifwvjadm70j0qym0ui6msi\",\"productCodeType\":\"marketplace\"}],\"instanceProfileId\":null,\"privateIpAddress\":\"10.100.1.34\",\"devices\":[\"/dev/sda1\",\"/dev/xvdf\",\"/dev/xvdg\",\"/dev/xvdh\",\"/dev/xvdi\"]}]}",
+        "errorMessage": null,
+        "count": 2
+    }, {
+        "id": "AuditGroupRecord$-VaRHeeHg",
+        "date": 1498353168888,
+        "actionName": "Describe Disks",
+        "status": "Success",
+        "parameters": "{\"_cluster\":\"10.100.1.28\",\"_result\":[{\"name\":\"NET-1.4\",\"pathInfos\":[{\"device\":\"xvdh\",\"initiatorPort\":\"0a\",\"node\":\"jgoodrum01-01\"}],\"aggregateName\":\"aggr1_small\",\"ownerNode\":\"jgoodrum01-01\",\"position\":\"data\"},{\"name\":\"NET-1.2\",\"pathInfos\":[{\"device\":\"xvdg\",\"initiatorPort\":\"0a\",\"node\":\"jgoodrum01-01\"}],\"aggregateName\":\"aggr1\",\"ownerNode\":\"jgoodrum01-01\",\"position\":\"data\"},{\"name\":\"NET-1.5\",\"pathInfos\":[{\"device\":\"xvdi\",\"initiatorPort\":\"0a\",\"node\":\"jgoodrum01-01\"}],\"aggregateName\":\"\",\"ownerNode\":\"jgoodrum01-01\",\"position\":\"present\"},{\"name\":\"NET-1.1\",\"pathInfos\":[{\"device\":\"xvdf\",\"initiatorPort\":\"0a\",\"node\":\"jgoodrum01-01\"}],\"aggregateName\":\"aggr0\",\"ownerNode\":\"jgoodrum01-01\",\"position\":\"data\"}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-rbuqJszD",
+        "date": 1498353168786,
+        "actionName": "Assign Disks",
+        "status": "Success",
+        "parameters": "{\"_result\":\"passed\",\"nodeName\":\"jgoodrum01-01\",\"pool\":null,\"_cluster\":\"10.100.1.28\",\"diskName\":\"NET-1.5\"}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-yLnE2YNM",
+        "date": 1498353168658,
+        "actionName": "Describe Disks",
+        "status": "Success",
+        "parameters": "{\"_cluster\":\"10.100.1.28\",\"_result\":[{\"name\":\"NET-1.4\",\"pathInfos\":[{\"device\":\"xvdh\",\"initiatorPort\":\"0a\",\"node\":\"jgoodrum01-01\"}],\"aggregateName\":\"aggr1_small\",\"ownerNode\":\"jgoodrum01-01\",\"position\":\"data\"},{\"name\":\"NET-1.2\",\"pathInfos\":[{\"device\":\"xvdg\",\"initiatorPort\":\"0a\",\"node\":\"jgoodrum01-01\"}],\"aggregateName\":\"aggr1\",\"ownerNode\":\"jgoodrum01-01\",\"position\":\"data\"},{\"name\":\"NET-1.5\",\"pathInfos\":[{\"device\":\"xvdi\",\"initiatorPort\":\"0a\",\"node\":\"jgoodrum01-01\"}],\"aggregateName\":\"\",\"ownerNode\":\"\",\"position\":\"present\"},{\"name\":\"NET-1.1\",\"pathInfos\":[{\"device\":\"xvdf\",\"initiatorPort\":\"0a\",\"node\":\"jgoodrum01-01\"}],\"aggregateName\":\"aggr0\",\"ownerNode\":\"jgoodrum01-01\",\"position\":\"data\"}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-Vnr6K1y2",
+        "date": 1498353128377,
+        "actionName": "Describe Disks",
+        "status": "Success",
+        "parameters": "{\"_cluster\":\"10.100.1.28\",\"_result\":[{\"name\":\"NET-1.4\",\"pathInfos\":[{\"device\":\"xvdh\",\"initiatorPort\":\"0a\",\"node\":\"jgoodrum01-01\"}],\"aggregateName\":\"aggr1_small\",\"ownerNode\":\"jgoodrum01-01\",\"position\":\"data\"},{\"name\":\"NET-1.2\",\"pathInfos\":[{\"device\":\"xvdg\",\"initiatorPort\":\"0a\",\"node\":\"jgoodrum01-01\"}],\"aggregateName\":\"aggr1\",\"ownerNode\":\"jgoodrum01-01\",\"position\":\"data\"},{\"name\":\"NET-1.1\",\"pathInfos\":[{\"device\":\"xvdf\",\"initiatorPort\":\"0a\",\"node\":\"jgoodrum01-01\"}],\"aggregateName\":\"aggr0\",\"ownerNode\":\"jgoodrum01-01\",\"position\":\"data\"}]}",
+        "errorMessage": null,
+        "count": 3
+    }, {
+        "id": "AuditGroupRecord$-2kjW3zA7",
+        "date": 1498353118282,
+        "actionName": "Modify Volume Deletion Policy",
+        "status": "Success",
+        "parameters": "{\"instanceId\":\"i-0edccc1a4166e9493\",\"deviceName\":\"/dev/xvdi\",\"_result\":\"success\",\"_region\":\"us-east-1\",\"volumeId\":\"vol-055baaa79da22c8b3\",\"deleteOnInstanceTermination\":true}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-qCABpvCk",
+        "date": 1498353118196,
+        "actionName": "Describe EBS Volumes With Filter",
+        "status": "Success",
+        "parameters": "{\"key\":\"volume-id\",\"value\":\"vol-055baaa79da22c8b3\",\"_region\":\"us-east-1\",\"_result\":[{\"size\":{\"size\":100.0,\"unit\":\"GB\"},\"state\":\"in-use\",\"createTime\":1498353107273,\"tags\":{\"WorkingEnvironment\":\"jgoodrum01\",\"Name\":\"data::jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\"},\"availabilityZone\":\"us-east-1b\",\"volumeType\":\"gp2\",\"encrypted\":false,\"iops\":300,\"volumeId\":\"vol-055baaa79da22c8b3\",\"attachment\":{\"instanceId\":\"i-0edccc1a4166e9493\",\"state\":\"attaching\",\"attachTime\":1498353118000,\"deleteOnTermination\":false,\"device\":\"/dev/xvdi\"},\"kmsKeyId\":null,\"snapshotId\":\"\"}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-q5KxVMG2",
+        "date": 1498353118075,
+        "actionName": "Attach EBS Volume",
+        "status": "Success",
+        "parameters": "{\"instanceId\":\"i-0edccc1a4166e9493\",\"_result\":\"vol-055baaa79da22c8b3\",\"_region\":\"us-east-1\",\"volumeId\":\"vol-055baaa79da22c8b3\",\"device\":\"/dev/xvdi\"}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-KYJFoxAs",
+        "date": 1498353117710,
+        "actionName": "Describe Nodes",
+        "status": "Success",
+        "parameters": "{\"_cluster\":\"10.100.1.28\",\"_result\":[{\"isClusterEligible\":true,\"model\":\"CDvM100\",\"nodeUptime\":4246,\"nodeName\":\"jgoodrum01-01\",\"isNodeHealthy\":true}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-fnq8lNDr",
+        "date": 1498353117669,
+        "actionName": "Create Tags",
+        "status": "Success",
+        "parameters": "{\"resourceIds\":[\"vol-055baaa79da22c8b3\"],\"tags\":{\"WorkingEnvironment\":\"jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\"},\"_region\":\"us-east-1\",\"_result\":\"success\"}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-FTIZ8ztH",
+        "date": 1498353117589,
+        "actionName": "Modify Volume Auto Enable IO",
+        "status": "Success",
+        "parameters": "{\"volumeId\":\"vol-055baaa79da22c8b3\",\"autoEnableIO\":true,\"_region\":\"us-east-1\",\"_result\":\"success\"}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-cGy3JeBy",
+        "date": 1498353117534,
+        "actionName": "Create Tags",
+        "status": "Success",
+        "parameters": "{\"resourceIds\":[\"vol-055baaa79da22c8b3\"],\"tags\":{\"WorkingEnvironment\":\"jgoodrum01\",\"Name\":\"data::jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\"},\"_region\":\"us-east-1\",\"_result\":\"success\"}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-bUGgFYUZ",
+        "date": 1498353117419,
+        "actionName": "Describe EBS Volumes With Filter",
+        "status": "Success",
+        "parameters": "{\"key\":\"volume-id\",\"value\":\"vol-055baaa79da22c8b3\",\"_region\":\"us-east-1\",\"_result\":[{\"size\":{\"size\":100.0,\"unit\":\"GB\"},\"state\":\"available\",\"createTime\":1498353107273,\"tags\":{},\"availabilityZone\":\"us-east-1b\",\"volumeType\":\"gp2\",\"encrypted\":false,\"iops\":300,\"volumeId\":\"vol-055baaa79da22c8b3\",\"attachment\":null,\"kmsKeyId\":null,\"snapshotId\":\"\"}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-d2gq3WYk",
+        "date": 1498353107309,
+        "actionName": "Create EBS Volume",
+        "status": "Success",
+        "parameters": "{\"_result\":\"vol-055baaa79da22c8b3\",\"size\":{\"size\":100.0,\"unit\":\"GB\"},\"_region\":\"us-east-1\",\"availabilityZone\":\"us-east-1b\",\"volumeType\":\"gp2\",\"encrypted\":false,\"kmsKeyId\":null}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-euQG0yUW",
+        "date": 1498353107025,
+        "actionName": "Describe EBS Volumes With Filter",
+        "status": "Success",
+        "parameters": "{\"key\":\"attachment.instance-id\",\"value\":\"i-0edccc1a4166e9493\",\"_region\":\"us-east-1\",\"_result\":[{\"size\":{\"size\":45.0,\"unit\":\"GB\"},\"state\":\"in-use\",\"createTime\":1498348849968,\"tags\":{\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\",\"WorkingEnvironment\":\"jgoodrum01\",\"Name\":\"boot::jgoodrum01\"},\"availabilityZone\":\"us-east-1b\",\"volumeType\":\"io1\",\"encrypted\":false,\"iops\":1250,\"volumeId\":\"vol-0c51e21801385f2fe\",\"attachment\":{\"instanceId\":\"i-0edccc1a4166e9493\",\"state\":\"attached\",\"attachTime\":1498348850000,\"deleteOnTermination\":true,\"device\":\"/dev/sda1\"},\"kmsKeyId\":null,\"snapshotId\":\"snap-0d930276134970da5\"},{\"size\":{\"size\":140.0,\"unit\":\"GB\"},\"state\":\"in-use\",\"createTime\":1498348850108,\"tags\":{\"Name\":\"root::jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\",\"WorkingEnvironment\":\"jgoodrum01\"},\"availabilityZone\":\"us-east-1b\",\"volumeType\":\"gp2\",\"encrypted\":false,\"iops\":420,\"volumeId\":\"vol-0182c02f4074104a8\",\"attachment\":{\"instanceId\":\"i-0edccc1a4166e9493\",\"state\":\"attached\",\"attachTime\":1498348850000,\"deleteOnTermination\":true,\"device\":\"/dev/xvdf\"},\"kmsKeyId\":null,\"snapshotId\":\"\"},{\"size\":{\"size\":1024.0,\"unit\":\"GB\"},\"state\":\"in-use\",\"createTime\":1498349190232,\"tags\":{\"WorkingEnvironment\":\"jgoodrum01\",\"Name\":\"data::jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\"},\"availabilityZone\":\"us-east-1b\",\"volumeType\":\"gp2\",\"encrypted\":false,\"iops\":3072,\"volumeId\":\"vol-0a2d1f11266f2ccd3\",\"attachment\":{\"instanceId\":\"i-0edccc1a4166e9493\",\"state\":\"attached\",\"attachTime\":1498349201000,\"deleteOnTermination\":true,\"device\":\"/dev/xvdg\"},\"kmsKeyId\":null,\"snapshotId\":\"\"},{\"size\":{\"size\":100.0,\"unit\":\"GB\"},\"state\":\"in-use\",\"createTime\":1498351335129,\"tags\":{\"Name\":\"data::jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\",\"WorkingEnvironment\":\"jgoodrum01\"},\"availabilityZone\":\"us-east-1b\",\"volumeType\":\"gp2\",\"encrypted\":false,\"iops\":300,\"volumeId\":\"vol-02aaad6616fdcca42\",\"attachment\":{\"instanceId\":\"i-0edccc1a4166e9493\",\"state\":\"attached\",\"attachTime\":1498351345000,\"deleteOnTermination\":true,\"device\":\"/dev/xvdh\"},\"kmsKeyId\":null,\"snapshotId\":\"\"}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-4DzSFpBo",
+        "date": 1498353106919,
+        "actionName": "Describe Cloud Formation Stack",
+        "status": "Success",
+        "parameters": "{\"stackId\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"_region\":\"us-east-1\",\"_result\":{\"name\":\"jgoodrum01\",\"description\":\"NetApp ONTAP Cloud for AWS CloudFormation Template for launching an instance from OnCommand Cloud Manager\",\"outputs\":{\"NodeMgmtIpAddress\":\"10.100.1.34\",\"PrivateDnsName\":\"ip-10-100-1-34.ec2.internal\",\"ClusterMgmtIpAddress\":\"10.100.1.28\",\"InstanceId\":\"i-0edccc1a4166e9493\"},\"id\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"status\":\"CREATE_COMPLETE\",\"parameters\":{\"EncryptRoot\":\"false\",\"PlatformSerialNumber\":\"\",\"KeyPair\":\"\",\"AMI\":\"ami-b2b843a4\",\"InstanceName\":\"jgoodrum01\",\"BootMediaType\":\"io1\",\"Tenancy\":\"default\",\"InstanceType\":\"m4.xlarge\",\"CustomSecurityGroup\":\"sg-d71abca6\",\"AllocatePublicIP\":\"false\",\"VpcId\":\"vpc-07fa467e\",\"SubnetId\":\"subnet-877f6ae2\"},\"creationTime\":1498348823405}}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-W192tpfA",
+        "date": 1498353106848,
+        "actionName": "User has approved purchasing 1 AWS disks of 100.0 GB",
+        "status": "Success",
+        "parameters": null,
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-nDrNBnMZ",
+        "date": 1498353106818,
+        "actionName": "Describe Identity Data",
+        "status": "Success",
+        "parameters": "{\"_result\":{\"instanceId\":\"i-0a8b373ab182e3547\",\"devpayProductCodes\":null,\"billingProducts\":[\"bp-6fa54006\"],\"availabilityZone\":\"us-east-1b\",\"accountId\":\"XXXXXXXXXXXX\",\"ramdiskId\":null,\"architecture\":\"x86_64\",\"instanceType\":\"t2.medium\",\"version\":\"2010-08-31\",\"pendingTime\":\"2017-06-24T23:50:45Z\",\"imageId\":\"ami-6c65a27a\",\"privateIp\":\"10.100.1.101\",\"region\":\"us-east-1\",\"kernelId\":null}}",
+        "errorMessage": null,
+        "count": 2
+    }, {
+        "id": "AuditGroupRecord$-vO7I0AtP",
+        "date": 1498353106802,
+        "actionName": "Describe Instances With Filter",
+        "status": "Success",
+        "parameters": "{\"key\":\"tag:aws:cloudformation:stack-id\",\"value\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"_region\":\"us-east-1\",\"_result\":[{\"instanceId\":\"i-0edccc1a4166e9493\",\"name\":\"jgoodrum01\",\"publicDnsName\":\"\",\"keyPair\":null,\"state\":\"running\",\"vpcId\":\"vpc-07fa467e\",\"tags\":{\"Name\":\"jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\",\"aws:cloudformation:stack-name\":\"jgoodrum01\",\"aws:cloudformation:logical-id\":\"DotInstance\",\"aws:cloudformation:stack-id\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"WorkingEnvironment\":\"jgoodrum01\",\"CloudONTAP.serial-number\":\"902XXXXXXXXXXXX37211\"},\"publicIpAddress\":null,\"availabilityZone\":\"us-east-1b\",\"subnetId\":\"subnet-877f6ae2\",\"instanceType\":\"m4.xlarge\",\"privateDnsName\":\"ip-10-100-1-34.ec2.internal\",\"tenancy\":\"default\",\"imageId\":\"ami-b2b843a4\",\"ipAddress\":\"10.100.1.34\",\"productCodes\":[{\"productCodeId\":\"bk9ifwvjadm70j0qym0ui6msi\",\"productCodeType\":\"marketplace\"}],\"instanceProfileId\":null,\"privateIpAddress\":\"10.100.1.34\",\"devices\":[\"/dev/sda1\",\"/dev/xvdf\",\"/dev/xvdg\",\"/dev/xvdh\"]}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-7xn1Sl8J",
+        "date": 1498353106725,
+        "actionName": "Describe EBS Volumes With Filter",
+        "status": "Success",
+        "parameters": "{\"key\":\"attachment.instance-id\",\"value\":\"i-0edccc1a4166e9493\",\"_region\":\"us-east-1\",\"_result\":[{\"size\":{\"size\":45.0,\"unit\":\"GB\"},\"state\":\"in-use\",\"createTime\":1498348849968,\"tags\":{\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\",\"WorkingEnvironment\":\"jgoodrum01\",\"Name\":\"boot::jgoodrum01\"},\"availabilityZone\":\"us-east-1b\",\"volumeType\":\"io1\",\"encrypted\":false,\"iops\":1250,\"volumeId\":\"vol-0c51e21801385f2fe\",\"attachment\":{\"instanceId\":\"i-0edccc1a4166e9493\",\"state\":\"attached\",\"attachTime\":1498348850000,\"deleteOnTermination\":true,\"device\":\"/dev/sda1\"},\"kmsKeyId\":null,\"snapshotId\":\"snap-0d930276134970da5\"},{\"size\":{\"size\":140.0,\"unit\":\"GB\"},\"state\":\"in-use\",\"createTime\":1498348850108,\"tags\":{\"Name\":\"root::jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\",\"WorkingEnvironment\":\"jgoodrum01\"},\"availabilityZone\":\"us-east-1b\",\"volumeType\":\"gp2\",\"encrypted\":false,\"iops\":420,\"volumeId\":\"vol-0182c02f4074104a8\",\"attachment\":{\"instanceId\":\"i-0edccc1a4166e9493\",\"state\":\"attached\",\"attachTime\":1498348850000,\"deleteOnTermination\":true,\"device\":\"/dev/xvdf\"},\"kmsKeyId\":null,\"snapshotId\":\"\"},{\"size\":{\"size\":1024.0,\"unit\":\"GB\"},\"state\":\"in-use\",\"createTime\":1498349190232,\"tags\":{\"WorkingEnvironment\":\"jgoodrum01\",\"Name\":\"data::jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\"},\"availabilityZone\":\"us-east-1b\",\"volumeType\":\"gp2\",\"encrypted\":false,\"iops\":3072,\"volumeId\":\"vol-0a2d1f11266f2ccd3\",\"attachment\":{\"instanceId\":\"i-0edccc1a4166e9493\",\"state\":\"attached\",\"attachTime\":1498349201000,\"deleteOnTermination\":true,\"device\":\"/dev/xvdg\"},\"kmsKeyId\":null,\"snapshotId\":\"\"},{\"size\":{\"size\":100.0,\"unit\":\"GB\"},\"state\":\"in-use\",\"createTime\":1498351335129,\"tags\":{\"Name\":\"data::jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\",\"WorkingEnvironment\":\"jgoodrum01\"},\"availabilityZone\":\"us-east-1b\",\"volumeType\":\"gp2\",\"encrypted\":false,\"iops\":300,\"volumeId\":\"vol-02aaad6616fdcca42\",\"attachment\":{\"instanceId\":\"i-0edccc1a4166e9493\",\"state\":\"attached\",\"attachTime\":1498351345000,\"deleteOnTermination\":true,\"device\":\"/dev/xvdh\"},\"kmsKeyId\":null,\"snapshotId\":\"\"}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-0iW5cESe",
+        "date": 1498353106651,
+        "actionName": "Describe Instances With Filter",
+        "status": "Success",
+        "parameters": "{\"key\":\"tag:aws:cloudformation:stack-id\",\"value\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"_region\":\"us-east-1\",\"_result\":[{\"instanceId\":\"i-0edccc1a4166e9493\",\"name\":\"jgoodrum01\",\"publicDnsName\":\"\",\"keyPair\":null,\"state\":\"running\",\"vpcId\":\"vpc-07fa467e\",\"tags\":{\"Name\":\"jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\",\"aws:cloudformation:stack-name\":\"jgoodrum01\",\"aws:cloudformation:logical-id\":\"DotInstance\",\"aws:cloudformation:stack-id\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"WorkingEnvironment\":\"jgoodrum01\",\"CloudONTAP.serial-number\":\"902XXXXXXXXXXXX37211\"},\"publicIpAddress\":null,\"availabilityZone\":\"us-east-1b\",\"subnetId\":\"subnet-877f6ae2\",\"instanceType\":\"m4.xlarge\",\"privateDnsName\":\"ip-10-100-1-34.ec2.internal\",\"tenancy\":\"default\",\"imageId\":\"ami-b2b843a4\",\"ipAddress\":\"10.100.1.34\",\"productCodes\":[{\"productCodeId\":\"bk9ifwvjadm70j0qym0ui6msi\",\"productCodeType\":\"marketplace\"}],\"instanceProfileId\":null,\"privateIpAddress\":\"10.100.1.34\",\"devices\":[\"/dev/sda1\",\"/dev/xvdf\",\"/dev/xvdg\",\"/dev/xvdh\"]}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-OQk5ifS7",
+        "date": 1498353106429,
+        "actionName": "Describe Disks",
+        "status": "Success",
+        "parameters": "{\"_cluster\":\"10.100.1.28\",\"_result\":[{\"name\":\"NET-1.4\",\"pathInfos\":[{\"device\":\"xvdh\",\"initiatorPort\":\"0a\",\"node\":\"jgoodrum01-01\"}],\"aggregateName\":\"aggr1_small\",\"ownerNode\":\"jgoodrum01-01\",\"position\":\"data\"},{\"name\":\"NET-1.2\",\"pathInfos\":[{\"device\":\"xvdg\",\"initiatorPort\":\"0a\",\"node\":\"jgoodrum01-01\"}],\"aggregateName\":\"aggr1\",\"ownerNode\":\"jgoodrum01-01\",\"position\":\"data\"},{\"name\":\"NET-1.1\",\"pathInfos\":[{\"device\":\"xvdf\",\"initiatorPort\":\"0a\",\"node\":\"jgoodrum01-01\"}],\"aggregateName\":\"aggr0\",\"ownerNode\":\"jgoodrum01-01\",\"position\":\"data\"}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-YvIl23xm",
+        "date": 1498353106356,
+        "actionName": "Describe Instances With Filter",
+        "status": "Success",
+        "parameters": "{\"key\":\"tag:aws:cloudformation:stack-id\",\"value\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"_region\":\"us-east-1\",\"_result\":[{\"instanceId\":\"i-0edccc1a4166e9493\",\"name\":\"jgoodrum01\",\"publicDnsName\":\"\",\"keyPair\":null,\"state\":\"running\",\"vpcId\":\"vpc-07fa467e\",\"tags\":{\"Name\":\"jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\",\"aws:cloudformation:stack-name\":\"jgoodrum01\",\"aws:cloudformation:logical-id\":\"DotInstance\",\"aws:cloudformation:stack-id\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"WorkingEnvironment\":\"jgoodrum01\",\"CloudONTAP.serial-number\":\"902XXXXXXXXXXXX37211\"},\"publicIpAddress\":null,\"availabilityZone\":\"us-east-1b\",\"subnetId\":\"subnet-877f6ae2\",\"instanceType\":\"m4.xlarge\",\"privateDnsName\":\"ip-10-100-1-34.ec2.internal\",\"tenancy\":\"default\",\"imageId\":\"ami-b2b843a4\",\"ipAddress\":\"10.100.1.34\",\"productCodes\":[{\"productCodeId\":\"bk9ifwvjadm70j0qym0ui6msi\",\"productCodeType\":\"marketplace\"}],\"instanceProfileId\":null,\"privateIpAddress\":\"10.100.1.34\",\"devices\":[\"/dev/sda1\",\"/dev/xvdf\",\"/dev/xvdg\",\"/dev/xvdh\"]}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-Rt2Y9XDm",
+        "date": 1498353106330,
+        "actionName": "Describe Aggregates",
+        "status": "Success",
+        "parameters": "{\"_cluster\":\"10.100.1.28\",\"_result\":[{\"isRoot\":true,\"name\":\"aggr0\",\"mirrored\":false,\"state\":\"online\",\"encryptionKeyId\":null,\"homeNode\":\"jgoodrum01-01\",\"availableCapacity\":{\"size\":57869377536,\"unit\":\"Byte\"},\"isSidl\":false,\"raidStatus\":[\"raid0\",\" normal\"],\"isComposite\":false,\"encrypted\":false,\"totalCapacity\":{\"size\":133151555584,\"unit\":\"Byte\"},\"ownerNode\":\"jgoodrum01-01\"},{\"isRoot\":false,\"name\":\"aggr1\",\"mirrored\":false,\"state\":\"online\",\"encryptionKeyId\":null,\"homeNode\":\"jgoodrum01-01\",\"availableCapacity\":{\"size\":972990255104,\"unit\":\"Byte\"},\"isSidl\":false,\"raidStatus\":[\"raid0\",\" normal\"],\"isComposite\":false,\"encrypted\":false,\"totalCapacity\":{\"size\":974072610816,\"unit\":\"Byte\"},\"ownerNode\":\"jgoodrum01-01\"},{\"isRoot\":false,\"name\":\"aggr1_small\",\"mirrored\":false,\"state\":\"online\",\"encryptionKeyId\":null,\"homeNode\":\"jgoodrum01-01\",\"availableCapacity\":{\"size\":85898653696,\"unit\":\"Byte\"},\"isSidl\":false,\"raidStatus\":[\"raid0\",\" normal\"],\"isComposite\":false,\"encrypted\":false,\"totalCapacity\":{\"size\":95100821504,\"unit\":\"Byte\"},\"ownerNode\":\"jgoodrum01-01\"}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-YOESg6NT",
+        "date": 1498353106330,
+        "actionName": "Describe Cluster Volumes",
+        "status": "Success",
+        "parameters": "{\"_cluster\":\"10.100.1.28\",\"_result\":[{\"name\":\"vol0\",\"sizeTotal\":{\"size\":74866024448,\"unit\":\"Byte\"},\"autoSizeMode\":\"off\",\"state\":\"online\",\"usedSize\":{\"size\":658608128,\"unit\":\"Byte\"},\"exportPolicy\":\"\",\"securityStyle\":\"\",\"thinProvisioning\":false,\"languageCode\":\"\",\"aggregateName\":\"aggr0\",\"volumeType\":\"rw\",\"maxGrowSize\":{\"size\":8.983922688E+10,\"unit\":\"Byte\"},\"svmName\":\"jgoodrum01-01\",\"junctionPath\":\"\",\"tieringPolicy\":null,\"snapshotPolicy\":\"\",\"compressionSpaceSaved\":{\"size\":0.0,\"unit\":\"Byte\"},\"clonedFromSnapshot\":null,\"parentVolumeName\":\"\",\"deduplicationSpaceSaved\":{\"size\":0.0,\"unit\":\"Byte\"},\"isVserverRoot\":false,\"creationTime\":1498348979},{\"name\":\"svm_jgoodrum01_root\",\"sizeTotal\":{\"size\":1073741824,\"unit\":\"Byte\"},\"autoSizeMode\":\"off\",\"state\":\"online\",\"usedSize\":{\"size\":352256.0,\"unit\":\"Byte\"},\"exportPolicy\":\"export-svm_jgoodrum01\",\"securityStyle\":\"unix\",\"thinProvisioning\":false,\"languageCode\":\"c.utf_8\",\"aggregateName\":\"aggr1\",\"volumeType\":\"rw\",\"maxGrowSize\":{\"size\":1288486912,\"unit\":\"Byte\"},\"svmName\":\"svm_jgoodrum01\",\"junctionPath\":\"/\",\"tieringPolicy\":null,\"snapshotPolicy\":\"default\",\"compressionSpaceSaved\":{\"size\":0.0,\"unit\":\"Byte\"},\"clonedFromSnapshot\":null,\"parentVolumeName\":\"\",\"deduplicationSpaceSaved\":{\"size\":0.0,\"unit\":\"Byte\"},\"isVserverRoot\":true,\"creationTime\":1498349284}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-GfcH7ZOL",
+        "date": 1498353106170,
+        "actionName": "Describe Instances With Filter",
+        "status": "Success",
+        "parameters": "{\"key\":\"tag:aws:cloudformation:stack-id\",\"value\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"_region\":\"us-east-1\",\"_result\":[{\"instanceId\":\"i-0edccc1a4166e9493\",\"name\":\"jgoodrum01\",\"publicDnsName\":\"\",\"keyPair\":null,\"state\":\"running\",\"vpcId\":\"vpc-07fa467e\",\"tags\":{\"Name\":\"jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\",\"aws:cloudformation:stack-name\":\"jgoodrum01\",\"aws:cloudformation:logical-id\":\"DotInstance\",\"aws:cloudformation:stack-id\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"WorkingEnvironment\":\"jgoodrum01\",\"CloudONTAP.serial-number\":\"902XXXXXXXXXXXX37211\"},\"publicIpAddress\":null,\"availabilityZone\":\"us-east-1b\",\"subnetId\":\"subnet-877f6ae2\",\"instanceType\":\"m4.xlarge\",\"privateDnsName\":\"ip-10-100-1-34.ec2.internal\",\"tenancy\":\"default\",\"imageId\":\"ami-b2b843a4\",\"ipAddress\":\"10.100.1.34\",\"productCodes\":[{\"productCodeId\":\"bk9ifwvjadm70j0qym0ui6msi\",\"productCodeType\":\"marketplace\"}],\"instanceProfileId\":null,\"privateIpAddress\":\"10.100.1.34\",\"devices\":[\"/dev/sda1\",\"/dev/xvdf\",\"/dev/xvdg\",\"/dev/xvdh\"]}]}",
+        "errorMessage": null,
+        "count": 2
+    }, {
+        "id": "AuditGroupRecord$-DRQeV6mS",
+        "date": 1498353106146,
+        "actionName": "Describe Cloud Formation Stack",
+        "status": "Success",
+        "parameters": "{\"stackId\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"_region\":\"us-east-1\",\"_result\":{\"name\":\"jgoodrum01\",\"description\":\"NetApp ONTAP Cloud for AWS CloudFormation Template for launching an instance from OnCommand Cloud Manager\",\"outputs\":{\"NodeMgmtIpAddress\":\"10.100.1.34\",\"PrivateDnsName\":\"ip-10-100-1-34.ec2.internal\",\"ClusterMgmtIpAddress\":\"10.100.1.28\",\"InstanceId\":\"i-0edccc1a4166e9493\"},\"id\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"status\":\"CREATE_COMPLETE\",\"parameters\":{\"EncryptRoot\":\"false\",\"PlatformSerialNumber\":\"\",\"KeyPair\":\"\",\"AMI\":\"ami-b2b843a4\",\"InstanceName\":\"jgoodrum01\",\"BootMediaType\":\"io1\",\"Tenancy\":\"default\",\"InstanceType\":\"m4.xlarge\",\"CustomSecurityGroup\":\"sg-d71abca6\",\"AllocatePublicIP\":\"false\",\"VpcId\":\"vpc-07fa467e\",\"SubnetId\":\"subnet-877f6ae2\"},\"creationTime\":1498348823405}}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-tng1CcQR",
+        "date": 1498353106091,
+        "actionName": "Describe SVMs",
+        "status": "Success",
+        "parameters": "{\"_cluster\":\"10.100.1.28\",\"_result\":[{\"svmType\":\"system\",\"svmState\":\"undefined\",\"allowedProtocols\":[],\"svmName\":\"Cluster\",\"language\":\"\",\"allowedAggregates\":[]},{\"svmType\":\"admin\",\"svmState\":\"undefined\",\"allowedProtocols\":[],\"svmName\":\"jgoodrum01\",\"language\":\"en_us\",\"allowedAggregates\":[]},{\"svmType\":\"node\",\"svmState\":\"undefined\",\"allowedProtocols\":[],\"svmName\":\"jgoodrum01-01\",\"language\":\"c\",\"allowedAggregates\":[]},{\"svmType\":\"data\",\"svmState\":\"running\",\"allowedProtocols\":[\"nfs\",\"cifs\",\"iscsi\"],\"svmName\":\"svm_jgoodrum01\",\"language\":\"c.utf_8\",\"allowedAggregates\":[\"aggr1\",\"aggr1_small\"]}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-e0tzjxqi",
+        "date": 1498353106049,
+        "actionName": "Describe Instance Status",
+        "status": "Success",
+        "parameters": "{\"instanceId\":\"i-0edccc1a4166e9493\",\"_region\":\"us-east-1\",\"_result\":{\"instanceId\":\"i-0edccc1a4166e9493\",\"status\":\"running\",\"instanceStatus\":\"ok\",\"systemStatus\":\"ok\"}}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-GsHZVq7d",
+        "date": 1498353106004,
+        "actionName": "Describe Instances With Filter",
+        "status": "Success",
+        "parameters": "{\"key\":\"tag:aws:cloudformation:stack-id\",\"value\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"_region\":\"us-east-1\",\"_result\":[{\"instanceId\":\"i-0edccc1a4166e9493\",\"name\":\"jgoodrum01\",\"publicDnsName\":\"\",\"keyPair\":null,\"state\":\"running\",\"vpcId\":\"vpc-07fa467e\",\"tags\":{\"Name\":\"jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\",\"aws:cloudformation:stack-name\":\"jgoodrum01\",\"aws:cloudformation:logical-id\":\"DotInstance\",\"aws:cloudformation:stack-id\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"WorkingEnvironment\":\"jgoodrum01\",\"CloudONTAP.serial-number\":\"902XXXXXXXXXXXX37211\"},\"publicIpAddress\":null,\"availabilityZone\":\"us-east-1b\",\"subnetId\":\"subnet-877f6ae2\",\"instanceType\":\"m4.xlarge\",\"privateDnsName\":\"ip-10-100-1-34.ec2.internal\",\"tenancy\":\"default\",\"imageId\":\"ami-b2b843a4\",\"ipAddress\":\"10.100.1.34\",\"productCodes\":[{\"productCodeId\":\"bk9ifwvjadm70j0qym0ui6msi\",\"productCodeType\":\"marketplace\"}],\"instanceProfileId\":null,\"privateIpAddress\":\"10.100.1.34\",\"devices\":[\"/dev/sda1\",\"/dev/xvdf\",\"/dev/xvdg\",\"/dev/xvdh\"]}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-KBCaPwIe",
+        "date": 1498353105927,
+        "actionName": "Describe Nodes",
+        "status": "Success",
+        "parameters": "{\"_cluster\":\"10.100.1.28\",\"_result\":[{\"isClusterEligible\":true,\"model\":\"CDvM100\",\"nodeUptime\":4234,\"nodeName\":\"jgoodrum01-01\",\"isNodeHealthy\":true}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-KNSbOPm2",
+        "date": 1498353105894,
+        "actionName": "Describe EBS Volumes With Filter",
+        "status": "Success",
+        "parameters": "{\"key\":\"attachment.instance-id\",\"value\":\"i-0edccc1a4166e9493\",\"_region\":\"us-east-1\",\"_result\":[{\"size\":{\"size\":45.0,\"unit\":\"GB\"},\"state\":\"in-use\",\"createTime\":1498348849968,\"tags\":{\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\",\"WorkingEnvironment\":\"jgoodrum01\",\"Name\":\"boot::jgoodrum01\"},\"availabilityZone\":\"us-east-1b\",\"volumeType\":\"io1\",\"encrypted\":false,\"iops\":1250,\"volumeId\":\"vol-0c51e21801385f2fe\",\"attachment\":{\"instanceId\":\"i-0edccc1a4166e9493\",\"state\":\"attached\",\"attachTime\":1498348850000,\"deleteOnTermination\":true,\"device\":\"/dev/sda1\"},\"kmsKeyId\":null,\"snapshotId\":\"snap-0d930276134970da5\"},{\"size\":{\"size\":140.0,\"unit\":\"GB\"},\"state\":\"in-use\",\"createTime\":1498348850108,\"tags\":{\"Name\":\"root::jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\",\"WorkingEnvironment\":\"jgoodrum01\"},\"availabilityZone\":\"us-east-1b\",\"volumeType\":\"gp2\",\"encrypted\":false,\"iops\":420,\"volumeId\":\"vol-0182c02f4074104a8\",\"attachment\":{\"instanceId\":\"i-0edccc1a4166e9493\",\"state\":\"attached\",\"attachTime\":1498348850000,\"deleteOnTermination\":true,\"device\":\"/dev/xvdf\"},\"kmsKeyId\":null,\"snapshotId\":\"\"},{\"size\":{\"size\":1024.0,\"unit\":\"GB\"},\"state\":\"in-use\",\"createTime\":1498349190232,\"tags\":{\"WorkingEnvironment\":\"jgoodrum01\",\"Name\":\"data::jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\"},\"availabilityZone\":\"us-east-1b\",\"volumeType\":\"gp2\",\"encrypted\":false,\"iops\":3072,\"volumeId\":\"vol-0a2d1f11266f2ccd3\",\"attachment\":{\"instanceId\":\"i-0edccc1a4166e9493\",\"state\":\"attached\",\"attachTime\":1498349201000,\"deleteOnTermination\":true,\"device\":\"/dev/xvdg\"},\"kmsKeyId\":null,\"snapshotId\":\"\"},{\"size\":{\"size\":100.0,\"unit\":\"GB\"},\"state\":\"in-use\",\"createTime\":1498351335129,\"tags\":{\"Name\":\"data::jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\",\"WorkingEnvironment\":\"jgoodrum01\"},\"availabilityZone\":\"us-east-1b\",\"volumeType\":\"gp2\",\"encrypted\":false,\"iops\":300,\"volumeId\":\"vol-02aaad6616fdcca42\",\"attachment\":{\"instanceId\":\"i-0edccc1a4166e9493\",\"state\":\"attached\",\"attachTime\":1498351345000,\"deleteOnTermination\":true,\"device\":\"/dev/xvdh\"},\"kmsKeyId\":null,\"snapshotId\":\"\"}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-BVva3xRC",
+        "date": 1498353105814,
+        "actionName": "Describe Instances With Filter",
+        "status": "Success",
+        "parameters": "{\"key\":\"tag:aws:cloudformation:stack-id\",\"value\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"_region\":\"us-east-1\",\"_result\":[{\"instanceId\":\"i-0edccc1a4166e9493\",\"name\":\"jgoodrum01\",\"publicDnsName\":\"\",\"keyPair\":null,\"state\":\"running\",\"vpcId\":\"vpc-07fa467e\",\"tags\":{\"Name\":\"jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\",\"aws:cloudformation:stack-name\":\"jgoodrum01\",\"aws:cloudformation:logical-id\":\"DotInstance\",\"aws:cloudformation:stack-id\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"WorkingEnvironment\":\"jgoodrum01\",\"CloudONTAP.serial-number\":\"902XXXXXXXXXXXX37211\"},\"publicIpAddress\":null,\"availabilityZone\":\"us-east-1b\",\"subnetId\":\"subnet-877f6ae2\",\"instanceType\":\"m4.xlarge\",\"privateDnsName\":\"ip-10-100-1-34.ec2.internal\",\"tenancy\":\"default\",\"imageId\":\"ami-b2b843a4\",\"ipAddress\":\"10.100.1.34\",\"productCodes\":[{\"productCodeId\":\"bk9ifwvjadm70j0qym0ui6msi\",\"productCodeType\":\"marketplace\"}],\"instanceProfileId\":null,\"privateIpAddress\":\"10.100.1.34\",\"devices\":[\"/dev/sda1\",\"/dev/xvdf\",\"/dev/xvdg\",\"/dev/xvdh\"]}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-bJuFoIS6",
+        "date": 1498353105716,
+        "actionName": "Describe Ontap Version",
+        "status": "Success",
+        "parameters": "{\"_cluster\":\"10.100.1.28\",\"_result\":{\"generation\":9,\"major\":1,\"minor\":0}}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-n7DghpSG",
+        "date": 1498353105672,
+        "actionName": "Describe Identity Data",
+        "status": "Success",
+        "parameters": "{\"_result\":{\"instanceId\":\"i-0a8b373ab182e3547\",\"devpayProductCodes\":null,\"billingProducts\":[\"bp-6fa54006\"],\"availabilityZone\":\"us-east-1b\",\"accountId\":\"XXXXXXXXXXXX\",\"ramdiskId\":null,\"architecture\":\"x86_64\",\"instanceType\":\"t2.medium\",\"version\":\"2010-08-31\",\"pendingTime\":\"2017-06-24T23:50:45Z\",\"imageId\":\"ami-6c65a27a\",\"privateIp\":\"10.100.1.101\",\"region\":\"us-east-1\",\"kernelId\":null}}",
+        "errorMessage": null,
+        "count": 2
+    }, {
+        "id": "AuditGroupRecord$-A52sl0S2",
+        "date": 1498353105569,
+        "actionName": "Describe Instances With Filter",
+        "status": "Success",
+        "parameters": "{\"key\":\"tag:aws:cloudformation:stack-id\",\"value\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"_region\":\"us-east-1\",\"_result\":[{\"instanceId\":\"i-0edccc1a4166e9493\",\"name\":\"jgoodrum01\",\"publicDnsName\":\"\",\"keyPair\":null,\"state\":\"running\",\"vpcId\":\"vpc-07fa467e\",\"tags\":{\"Name\":\"jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\",\"aws:cloudformation:stack-name\":\"jgoodrum01\",\"aws:cloudformation:logical-id\":\"DotInstance\",\"aws:cloudformation:stack-id\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"WorkingEnvironment\":\"jgoodrum01\",\"CloudONTAP.serial-number\":\"902XXXXXXXXXXXX37211\"},\"publicIpAddress\":null,\"availabilityZone\":\"us-east-1b\",\"subnetId\":\"subnet-877f6ae2\",\"instanceType\":\"m4.xlarge\",\"privateDnsName\":\"ip-10-100-1-34.ec2.internal\",\"tenancy\":\"default\",\"imageId\":\"ami-b2b843a4\",\"ipAddress\":\"10.100.1.34\",\"productCodes\":[{\"productCodeId\":\"bk9ifwvjadm70j0qym0ui6msi\",\"productCodeType\":\"marketplace\"}],\"instanceProfileId\":null,\"privateIpAddress\":\"10.100.1.34\",\"devices\":[\"/dev/sda1\",\"/dev/xvdf\",\"/dev/xvdg\",\"/dev/xvdh\"]}]}",
+        "errorMessage": null,
+        "count": 2
+    }, {
+        "id": "AuditGroupRecord$-ajFgaOMs",
+        "date": 1498353105462,
+        "actionName": "Describe Identity Data",
+        "status": "Success",
+        "parameters": "{\"_result\":{\"instanceId\":\"i-0a8b373ab182e3547\",\"devpayProductCodes\":null,\"billingProducts\":[\"bp-6fa54006\"],\"availabilityZone\":\"us-east-1b\",\"accountId\":\"XXXXXXXXXXXX\",\"ramdiskId\":null,\"architecture\":\"x86_64\",\"instanceType\":\"t2.medium\",\"version\":\"2010-08-31\",\"pendingTime\":\"2017-06-24T23:50:45Z\",\"imageId\":\"ami-6c65a27a\",\"privateIp\":\"10.100.1.101\",\"region\":\"us-east-1\",\"kernelId\":null}}",
+        "errorMessage": null,
+        "count": 2
+    }, {
+        "id": "AuditGroupRecord$-g2KUNXl1",
+        "date": 1498353105449,
+        "actionName": "Describe Instances With Filter",
+        "status": "Success",
+        "parameters": "{\"key\":\"tag:aws:cloudformation:stack-id\",\"value\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"_region\":\"us-east-1\",\"_result\":[{\"instanceId\":\"i-0edccc1a4166e9493\",\"name\":\"jgoodrum01\",\"publicDnsName\":\"\",\"keyPair\":null,\"state\":\"running\",\"vpcId\":\"vpc-07fa467e\",\"tags\":{\"Name\":\"jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\",\"aws:cloudformation:stack-name\":\"jgoodrum01\",\"aws:cloudformation:logical-id\":\"DotInstance\",\"aws:cloudformation:stack-id\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"WorkingEnvironment\":\"jgoodrum01\",\"CloudONTAP.serial-number\":\"902XXXXXXXXXXXX37211\"},\"publicIpAddress\":null,\"availabilityZone\":\"us-east-1b\",\"subnetId\":\"subnet-877f6ae2\",\"instanceType\":\"m4.xlarge\",\"privateDnsName\":\"ip-10-100-1-34.ec2.internal\",\"tenancy\":\"default\",\"imageId\":\"ami-b2b843a4\",\"ipAddress\":\"10.100.1.34\",\"productCodes\":[{\"productCodeId\":\"bk9ifwvjadm70j0qym0ui6msi\",\"productCodeType\":\"marketplace\"}],\"instanceProfileId\":null,\"privateIpAddress\":\"10.100.1.34\",\"devices\":[\"/dev/sda1\",\"/dev/xvdf\",\"/dev/xvdg\",\"/dev/xvdh\"]}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-L0MwU1Kd",
+        "date": 1498353105332,
+        "actionName": "Describe Ontap Version",
+        "status": "Success",
+        "parameters": "{\"_cluster\":\"10.100.1.28\",\"_result\":{\"generation\":9,\"major\":1,\"minor\":0}}",
+        "errorMessage": null,
+        "count": 2
+    }, {
+        "id": "AuditGroupRecord$-2UJtjKGj",
+        "date": 1498353105301,
+        "actionName": "Describe EBS Volumes With Filter",
+        "status": "Success",
+        "parameters": "{\"key\":\"attachment.instance-id\",\"value\":\"i-0edccc1a4166e9493\",\"_region\":\"us-east-1\",\"_result\":[{\"size\":{\"size\":45.0,\"unit\":\"GB\"},\"state\":\"in-use\",\"createTime\":1498348849968,\"tags\":{\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\",\"WorkingEnvironment\":\"jgoodrum01\",\"Name\":\"boot::jgoodrum01\"},\"availabilityZone\":\"us-east-1b\",\"volumeType\":\"io1\",\"encrypted\":false,\"iops\":1250,\"volumeId\":\"vol-0c51e21801385f2fe\",\"attachment\":{\"instanceId\":\"i-0edccc1a4166e9493\",\"state\":\"attached\",\"attachTime\":1498348850000,\"deleteOnTermination\":true,\"device\":\"/dev/sda1\"},\"kmsKeyId\":null,\"snapshotId\":\"snap-0d930276134970da5\"},{\"size\":{\"size\":140.0,\"unit\":\"GB\"},\"state\":\"in-use\",\"createTime\":1498348850108,\"tags\":{\"Name\":\"root::jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\",\"WorkingEnvironment\":\"jgoodrum01\"},\"availabilityZone\":\"us-east-1b\",\"volumeType\":\"gp2\",\"encrypted\":false,\"iops\":420,\"volumeId\":\"vol-0182c02f4074104a8\",\"attachment\":{\"instanceId\":\"i-0edccc1a4166e9493\",\"state\":\"attached\",\"attachTime\":1498348850000,\"deleteOnTermination\":true,\"device\":\"/dev/xvdf\"},\"kmsKeyId\":null,\"snapshotId\":\"\"},{\"size\":{\"size\":1024.0,\"unit\":\"GB\"},\"state\":\"in-use\",\"createTime\":1498349190232,\"tags\":{\"WorkingEnvironment\":\"jgoodrum01\",\"Name\":\"data::jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\"},\"availabilityZone\":\"us-east-1b\",\"volumeType\":\"gp2\",\"encrypted\":false,\"iops\":3072,\"volumeId\":\"vol-0a2d1f11266f2ccd3\",\"attachment\":{\"instanceId\":\"i-0edccc1a4166e9493\",\"state\":\"attached\",\"attachTime\":1498349201000,\"deleteOnTermination\":true,\"device\":\"/dev/xvdg\"},\"kmsKeyId\":null,\"snapshotId\":\"\"},{\"size\":{\"size\":100.0,\"unit\":\"GB\"},\"state\":\"in-use\",\"createTime\":1498351335129,\"tags\":{\"Name\":\"data::jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\",\"WorkingEnvironment\":\"jgoodrum01\"},\"availabilityZone\":\"us-east-1b\",\"volumeType\":\"gp2\",\"encrypted\":false,\"iops\":300,\"volumeId\":\"vol-02aaad6616fdcca42\",\"attachment\":{\"instanceId\":\"i-0edccc1a4166e9493\",\"state\":\"attached\",\"attachTime\":1498351345000,\"deleteOnTermination\":true,\"device\":\"/dev/xvdh\"},\"kmsKeyId\":null,\"snapshotId\":\"\"}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-3wC0TQdw",
+        "date": 1498353105299,
+        "actionName": "Describe Disks",
+        "status": "Success",
+        "parameters": "{\"_cluster\":\"10.100.1.28\",\"_result\":[{\"name\":\"NET-1.4\",\"pathInfos\":[{\"device\":\"xvdh\",\"initiatorPort\":\"0a\",\"node\":\"jgoodrum01-01\"}],\"aggregateName\":\"aggr1_small\",\"ownerNode\":\"jgoodrum01-01\",\"position\":\"data\"},{\"name\":\"NET-1.2\",\"pathInfos\":[{\"device\":\"xvdg\",\"initiatorPort\":\"0a\",\"node\":\"jgoodrum01-01\"}],\"aggregateName\":\"aggr1\",\"ownerNode\":\"jgoodrum01-01\",\"position\":\"data\"},{\"name\":\"NET-1.1\",\"pathInfos\":[{\"device\":\"xvdf\",\"initiatorPort\":\"0a\",\"node\":\"jgoodrum01-01\"}],\"aggregateName\":\"aggr0\",\"ownerNode\":\"jgoodrum01-01\",\"position\":\"data\"}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-u9IvM5Vr",
+        "date": 1498353105191,
+        "actionName": "Describe Instances With Filter",
+        "status": "Success",
+        "parameters": "{\"key\":\"tag:aws:cloudformation:stack-id\",\"value\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"_region\":\"us-east-1\",\"_result\":[{\"instanceId\":\"i-0edccc1a4166e9493\",\"name\":\"jgoodrum01\",\"publicDnsName\":\"\",\"keyPair\":null,\"state\":\"running\",\"vpcId\":\"vpc-07fa467e\",\"tags\":{\"Name\":\"jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\",\"aws:cloudformation:stack-name\":\"jgoodrum01\",\"aws:cloudformation:logical-id\":\"DotInstance\",\"aws:cloudformation:stack-id\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"WorkingEnvironment\":\"jgoodrum01\",\"CloudONTAP.serial-number\":\"902XXXXXXXXXXXX37211\"},\"publicIpAddress\":null,\"availabilityZone\":\"us-east-1b\",\"subnetId\":\"subnet-877f6ae2\",\"instanceType\":\"m4.xlarge\",\"privateDnsName\":\"ip-10-100-1-34.ec2.internal\",\"tenancy\":\"default\",\"imageId\":\"ami-b2b843a4\",\"ipAddress\":\"10.100.1.34\",\"productCodes\":[{\"productCodeId\":\"bk9ifwvjadm70j0qym0ui6msi\",\"productCodeType\":\"marketplace\"}],\"instanceProfileId\":null,\"privateIpAddress\":\"10.100.1.34\",\"devices\":[\"/dev/sda1\",\"/dev/xvdf\",\"/dev/xvdg\",\"/dev/xvdh\"]}]}",
+        "errorMessage": null,
+        "count": 2
+    }, {
+        "id": "AuditGroupRecord$-wt8LoSax",
+        "date": 1498353105177,
+        "actionName": "Describe Cluster Volumes",
+        "status": "Success",
+        "parameters": "{\"_cluster\":\"10.100.1.28\",\"_result\":[{\"name\":\"vol0\",\"sizeTotal\":{\"size\":74866024448,\"unit\":\"Byte\"},\"autoSizeMode\":\"off\",\"state\":\"online\",\"usedSize\":{\"size\":658587648,\"unit\":\"Byte\"},\"exportPolicy\":\"\",\"securityStyle\":\"\",\"thinProvisioning\":false,\"languageCode\":\"\",\"aggregateName\":\"aggr0\",\"volumeType\":\"rw\",\"maxGrowSize\":{\"size\":8.983922688E+10,\"unit\":\"Byte\"},\"svmName\":\"jgoodrum01-01\",\"junctionPath\":\"\",\"tieringPolicy\":null,\"snapshotPolicy\":\"\",\"compressionSpaceSaved\":{\"size\":0.0,\"unit\":\"Byte\"},\"clonedFromSnapshot\":null,\"parentVolumeName\":\"\",\"deduplicationSpaceSaved\":{\"size\":0.0,\"unit\":\"Byte\"},\"isVserverRoot\":false,\"creationTime\":1498348979},{\"name\":\"svm_jgoodrum01_root\",\"sizeTotal\":{\"size\":1073741824,\"unit\":\"Byte\"},\"autoSizeMode\":\"off\",\"state\":\"online\",\"usedSize\":{\"size\":352256.0,\"unit\":\"Byte\"},\"exportPolicy\":\"export-svm_jgoodrum01\",\"securityStyle\":\"unix\",\"thinProvisioning\":false,\"languageCode\":\"c.utf_8\",\"aggregateName\":\"aggr1\",\"volumeType\":\"rw\",\"maxGrowSize\":{\"size\":1288486912,\"unit\":\"Byte\"},\"svmName\":\"svm_jgoodrum01\",\"junctionPath\":\"/\",\"tieringPolicy\":null,\"snapshotPolicy\":\"default\",\"compressionSpaceSaved\":{\"size\":0.0,\"unit\":\"Byte\"},\"clonedFromSnapshot\":null,\"parentVolumeName\":\"\",\"deduplicationSpaceSaved\":{\"size\":0.0,\"unit\":\"Byte\"},\"isVserverRoot\":true,\"creationTime\":1498349284}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-OYUyaMor",
+        "date": 1498353105177,
+        "actionName": "Describe Aggregates",
+        "status": "Success",
+        "parameters": "{\"_cluster\":\"10.100.1.28\",\"_result\":[{\"isRoot\":true,\"name\":\"aggr0\",\"mirrored\":false,\"state\":\"online\",\"encryptionKeyId\":null,\"homeNode\":\"jgoodrum01-01\",\"availableCapacity\":{\"size\":57869377536,\"unit\":\"Byte\"},\"isSidl\":false,\"raidStatus\":[\"raid0\",\" normal\"],\"isComposite\":false,\"encrypted\":false,\"totalCapacity\":{\"size\":133151555584,\"unit\":\"Byte\"},\"ownerNode\":\"jgoodrum01-01\"},{\"isRoot\":false,\"name\":\"aggr1\",\"mirrored\":false,\"state\":\"online\",\"encryptionKeyId\":null,\"homeNode\":\"jgoodrum01-01\",\"availableCapacity\":{\"size\":972990255104,\"unit\":\"Byte\"},\"isSidl\":false,\"raidStatus\":[\"raid0\",\" normal\"],\"isComposite\":false,\"encrypted\":false,\"totalCapacity\":{\"size\":974072610816,\"unit\":\"Byte\"},\"ownerNode\":\"jgoodrum01-01\"},{\"isRoot\":false,\"name\":\"aggr1_small\",\"mirrored\":false,\"state\":\"online\",\"encryptionKeyId\":null,\"homeNode\":\"jgoodrum01-01\",\"availableCapacity\":{\"size\":85898653696,\"unit\":\"Byte\"},\"isSidl\":false,\"raidStatus\":[\"raid0\",\" normal\"],\"isComposite\":false,\"encrypted\":false,\"totalCapacity\":{\"size\":95100821504,\"unit\":\"Byte\"},\"ownerNode\":\"jgoodrum01-01\"}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-RpxteCpQ",
+        "date": 1498353105101,
+        "actionName": "Describe SVMs",
+        "status": "Success",
+        "parameters": "{\"_cluster\":\"10.100.1.28\",\"_result\":[{\"svmType\":\"system\",\"svmState\":\"undefined\",\"allowedProtocols\":[],\"svmName\":\"Cluster\",\"language\":\"\",\"allowedAggregates\":[]},{\"svmType\":\"admin\",\"svmState\":\"undefined\",\"allowedProtocols\":[],\"svmName\":\"jgoodrum01\",\"language\":\"en_us\",\"allowedAggregates\":[]},{\"svmType\":\"node\",\"svmState\":\"undefined\",\"allowedProtocols\":[],\"svmName\":\"jgoodrum01-01\",\"language\":\"c\",\"allowedAggregates\":[]},{\"svmType\":\"data\",\"svmState\":\"running\",\"allowedProtocols\":[\"nfs\",\"cifs\",\"iscsi\"],\"svmName\":\"svm_jgoodrum01\",\"language\":\"c.utf_8\",\"allowedAggregates\":[\"aggr1\",\"aggr1_small\"]}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-x8sPjoZf",
+        "date": 1498353105054,
+        "actionName": "Describe Instance Status",
+        "status": "Success",
+        "parameters": "{\"instanceId\":\"i-0edccc1a4166e9493\",\"_region\":\"us-east-1\",\"_result\":{\"instanceId\":\"i-0edccc1a4166e9493\",\"status\":\"running\",\"instanceStatus\":\"ok\",\"systemStatus\":\"ok\"}}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-M33w0YtD",
+        "date": 1498353105002,
+        "actionName": "Describe Instances With Filter",
+        "status": "Success",
+        "parameters": "{\"key\":\"tag:aws:cloudformation:stack-id\",\"value\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"_region\":\"us-east-1\",\"_result\":[{\"instanceId\":\"i-0edccc1a4166e9493\",\"name\":\"jgoodrum01\",\"publicDnsName\":\"\",\"keyPair\":null,\"state\":\"running\",\"vpcId\":\"vpc-07fa467e\",\"tags\":{\"Name\":\"jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\",\"aws:cloudformation:stack-name\":\"jgoodrum01\",\"aws:cloudformation:logical-id\":\"DotInstance\",\"aws:cloudformation:stack-id\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"WorkingEnvironment\":\"jgoodrum01\",\"CloudONTAP.serial-number\":\"902XXXXXXXXXXXX37211\"},\"publicIpAddress\":null,\"availabilityZone\":\"us-east-1b\",\"subnetId\":\"subnet-877f6ae2\",\"instanceType\":\"m4.xlarge\",\"privateDnsName\":\"ip-10-100-1-34.ec2.internal\",\"tenancy\":\"default\",\"imageId\":\"ami-b2b843a4\",\"ipAddress\":\"10.100.1.34\",\"productCodes\":[{\"productCodeId\":\"bk9ifwvjadm70j0qym0ui6msi\",\"productCodeType\":\"marketplace\"}],\"instanceProfileId\":null,\"privateIpAddress\":\"10.100.1.34\",\"devices\":[\"/dev/sda1\",\"/dev/xvdf\",\"/dev/xvdg\",\"/dev/xvdh\"]}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-cgIianMJ",
+        "date": 1498353104907,
+        "actionName": "Describe Disks",
+        "status": "Success",
+        "parameters": "{\"_cluster\":\"10.100.1.28\",\"_result\":[{\"name\":\"NET-1.4\",\"pathInfos\":[{\"device\":\"xvdh\",\"initiatorPort\":\"0a\",\"node\":\"jgoodrum01-01\"}],\"aggregateName\":\"aggr1_small\",\"ownerNode\":\"jgoodrum01-01\",\"position\":\"data\"},{\"name\":\"NET-1.2\",\"pathInfos\":[{\"device\":\"xvdg\",\"initiatorPort\":\"0a\",\"node\":\"jgoodrum01-01\"}],\"aggregateName\":\"aggr1\",\"ownerNode\":\"jgoodrum01-01\",\"position\":\"data\"},{\"name\":\"NET-1.1\",\"pathInfos\":[{\"device\":\"xvdf\",\"initiatorPort\":\"0a\",\"node\":\"jgoodrum01-01\"}],\"aggregateName\":\"aggr0\",\"ownerNode\":\"jgoodrum01-01\",\"position\":\"data\"}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-I6dXlLYc",
+        "date": 1498353104866,
+        "actionName": "Describe EBS Volumes With Filter",
+        "status": "Success",
+        "parameters": "{\"key\":\"attachment.instance-id\",\"value\":\"i-0edccc1a4166e9493\",\"_region\":\"us-east-1\",\"_result\":[{\"size\":{\"size\":45.0,\"unit\":\"GB\"},\"state\":\"in-use\",\"createTime\":1498348849968,\"tags\":{\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\",\"WorkingEnvironment\":\"jgoodrum01\",\"Name\":\"boot::jgoodrum01\"},\"availabilityZone\":\"us-east-1b\",\"volumeType\":\"io1\",\"encrypted\":false,\"iops\":1250,\"volumeId\":\"vol-0c51e21801385f2fe\",\"attachment\":{\"instanceId\":\"i-0edccc1a4166e9493\",\"state\":\"attached\",\"attachTime\":1498348850000,\"deleteOnTermination\":true,\"device\":\"/dev/sda1\"},\"kmsKeyId\":null,\"snapshotId\":\"snap-0d930276134970da5\"},{\"size\":{\"size\":140.0,\"unit\":\"GB\"},\"state\":\"in-use\",\"createTime\":1498348850108,\"tags\":{\"Name\":\"root::jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\",\"WorkingEnvironment\":\"jgoodrum01\"},\"availabilityZone\":\"us-east-1b\",\"volumeType\":\"gp2\",\"encrypted\":false,\"iops\":420,\"volumeId\":\"vol-0182c02f4074104a8\",\"attachment\":{\"instanceId\":\"i-0edccc1a4166e9493\",\"state\":\"attached\",\"attachTime\":1498348850000,\"deleteOnTermination\":true,\"device\":\"/dev/xvdf\"},\"kmsKeyId\":null,\"snapshotId\":\"\"},{\"size\":{\"size\":1024.0,\"unit\":\"GB\"},\"state\":\"in-use\",\"createTime\":1498349190232,\"tags\":{\"WorkingEnvironment\":\"jgoodrum01\",\"Name\":\"data::jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\"},\"availabilityZone\":\"us-east-1b\",\"volumeType\":\"gp2\",\"encrypted\":false,\"iops\":3072,\"volumeId\":\"vol-0a2d1f11266f2ccd3\",\"attachment\":{\"instanceId\":\"i-0edccc1a4166e9493\",\"state\":\"attached\",\"attachTime\":1498349201000,\"deleteOnTermination\":true,\"device\":\"/dev/xvdg\"},\"kmsKeyId\":null,\"snapshotId\":\"\"},{\"size\":{\"size\":100.0,\"unit\":\"GB\"},\"state\":\"in-use\",\"createTime\":1498351335129,\"tags\":{\"Name\":\"data::jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\",\"WorkingEnvironment\":\"jgoodrum01\"},\"availabilityZone\":\"us-east-1b\",\"volumeType\":\"gp2\",\"encrypted\":false,\"iops\":300,\"volumeId\":\"vol-02aaad6616fdcca42\",\"attachment\":{\"instanceId\":\"i-0edccc1a4166e9493\",\"state\":\"attached\",\"attachTime\":1498351345000,\"deleteOnTermination\":true,\"device\":\"/dev/xvdh\"},\"kmsKeyId\":null,\"snapshotId\":\"\"}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-YLNb9XMy",
+        "date": 1498353104804,
+        "actionName": "Describe Instances With Filter",
+        "status": "Success",
+        "parameters": "{\"key\":\"tag:aws:cloudformation:stack-id\",\"value\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"_region\":\"us-east-1\",\"_result\":[{\"instanceId\":\"i-0edccc1a4166e9493\",\"name\":\"jgoodrum01\",\"publicDnsName\":\"\",\"keyPair\":null,\"state\":\"running\",\"vpcId\":\"vpc-07fa467e\",\"tags\":{\"Name\":\"jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\",\"aws:cloudformation:stack-name\":\"jgoodrum01\",\"aws:cloudformation:logical-id\":\"DotInstance\",\"aws:cloudformation:stack-id\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"WorkingEnvironment\":\"jgoodrum01\",\"CloudONTAP.serial-number\":\"902XXXXXXXXXXXX37211\"},\"publicIpAddress\":null,\"availabilityZone\":\"us-east-1b\",\"subnetId\":\"subnet-877f6ae2\",\"instanceType\":\"m4.xlarge\",\"privateDnsName\":\"ip-10-100-1-34.ec2.internal\",\"tenancy\":\"default\",\"imageId\":\"ami-b2b843a4\",\"ipAddress\":\"10.100.1.34\",\"productCodes\":[{\"productCodeId\":\"bk9ifwvjadm70j0qym0ui6msi\",\"productCodeType\":\"marketplace\"}],\"instanceProfileId\":null,\"privateIpAddress\":\"10.100.1.34\",\"devices\":[\"/dev/sda1\",\"/dev/xvdf\",\"/dev/xvdg\",\"/dev/xvdh\"]}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-o4R2CjYF",
+        "date": 1498353104774,
+        "actionName": "Describe Aggregates",
+        "status": "Success",
+        "parameters": "{\"_cluster\":\"10.100.1.28\",\"_result\":[{\"isRoot\":true,\"name\":\"aggr0\",\"mirrored\":false,\"state\":\"online\",\"encryptionKeyId\":null,\"homeNode\":\"jgoodrum01-01\",\"availableCapacity\":{\"size\":57869377536,\"unit\":\"Byte\"},\"isSidl\":false,\"raidStatus\":[\"raid0\",\" normal\"],\"isComposite\":false,\"encrypted\":false,\"totalCapacity\":{\"size\":133151555584,\"unit\":\"Byte\"},\"ownerNode\":\"jgoodrum01-01\"},{\"isRoot\":false,\"name\":\"aggr1\",\"mirrored\":false,\"state\":\"online\",\"encryptionKeyId\":null,\"homeNode\":\"jgoodrum01-01\",\"availableCapacity\":{\"size\":972990255104,\"unit\":\"Byte\"},\"isSidl\":false,\"raidStatus\":[\"raid0\",\" normal\"],\"isComposite\":false,\"encrypted\":false,\"totalCapacity\":{\"size\":974072610816,\"unit\":\"Byte\"},\"ownerNode\":\"jgoodrum01-01\"},{\"isRoot\":false,\"name\":\"aggr1_small\",\"mirrored\":false,\"state\":\"online\",\"encryptionKeyId\":null,\"homeNode\":\"jgoodrum01-01\",\"availableCapacity\":{\"size\":85898653696,\"unit\":\"Byte\"},\"isSidl\":false,\"raidStatus\":[\"raid0\",\" normal\"],\"isComposite\":false,\"encrypted\":false,\"totalCapacity\":{\"size\":95100821504,\"unit\":\"Byte\"},\"ownerNode\":\"jgoodrum01-01\"}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-5YLOo2rd",
+        "date": 1498353104763,
+        "actionName": "Describe Instances With Filter",
+        "status": "Success",
+        "parameters": "{\"key\":\"tag:aws:cloudformation:stack-id\",\"value\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"_region\":\"us-east-1\",\"_result\":[{\"instanceId\":\"i-0edccc1a4166e9493\",\"name\":\"jgoodrum01\",\"publicDnsName\":\"\",\"keyPair\":null,\"state\":\"running\",\"vpcId\":\"vpc-07fa467e\",\"tags\":{\"Name\":\"jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\",\"aws:cloudformation:stack-name\":\"jgoodrum01\",\"aws:cloudformation:logical-id\":\"DotInstance\",\"aws:cloudformation:stack-id\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"WorkingEnvironment\":\"jgoodrum01\",\"CloudONTAP.serial-number\":\"902XXXXXXXXXXXX37211\"},\"publicIpAddress\":null,\"availabilityZone\":\"us-east-1b\",\"subnetId\":\"subnet-877f6ae2\",\"instanceType\":\"m4.xlarge\",\"privateDnsName\":\"ip-10-100-1-34.ec2.internal\",\"tenancy\":\"default\",\"imageId\":\"ami-b2b843a4\",\"ipAddress\":\"10.100.1.34\",\"productCodes\":[{\"productCodeId\":\"bk9ifwvjadm70j0qym0ui6msi\",\"productCodeType\":\"marketplace\"}],\"instanceProfileId\":null,\"privateIpAddress\":\"10.100.1.34\",\"devices\":[\"/dev/sda1\",\"/dev/xvdf\",\"/dev/xvdg\",\"/dev/xvdh\"]}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-VPxwoBG7",
+        "date": 1498353104730,
+        "actionName": "Describe Cluster Volumes",
+        "status": "Success",
+        "parameters": "{\"_cluster\":\"10.100.1.28\",\"_result\":[{\"name\":\"vol0\",\"sizeTotal\":{\"size\":74866024448,\"unit\":\"Byte\"},\"autoSizeMode\":\"off\",\"state\":\"online\",\"usedSize\":{\"size\":658558976,\"unit\":\"Byte\"},\"exportPolicy\":\"\",\"securityStyle\":\"\",\"thinProvisioning\":false,\"languageCode\":\"\",\"aggregateName\":\"aggr0\",\"volumeType\":\"rw\",\"maxGrowSize\":{\"size\":8.983922688E+10,\"unit\":\"Byte\"},\"svmName\":\"jgoodrum01-01\",\"junctionPath\":\"\",\"tieringPolicy\":null,\"snapshotPolicy\":\"\",\"compressionSpaceSaved\":{\"size\":0.0,\"unit\":\"Byte\"},\"clonedFromSnapshot\":null,\"parentVolumeName\":\"\",\"deduplicationSpaceSaved\":{\"size\":0.0,\"unit\":\"Byte\"},\"isVserverRoot\":false,\"creationTime\":1498348979},{\"name\":\"svm_jgoodrum01_root\",\"sizeTotal\":{\"size\":1073741824,\"unit\":\"Byte\"},\"autoSizeMode\":\"off\",\"state\":\"online\",\"usedSize\":{\"size\":352256.0,\"unit\":\"Byte\"},\"exportPolicy\":\"export-svm_jgoodrum01\",\"securityStyle\":\"unix\",\"thinProvisioning\":false,\"languageCode\":\"c.utf_8\",\"aggregateName\":\"aggr1\",\"volumeType\":\"rw\",\"maxGrowSize\":{\"size\":1288486912,\"unit\":\"Byte\"},\"svmName\":\"svm_jgoodrum01\",\"junctionPath\":\"/\",\"tieringPolicy\":null,\"snapshotPolicy\":\"default\",\"compressionSpaceSaved\":{\"size\":0.0,\"unit\":\"Byte\"},\"clonedFromSnapshot\":null,\"parentVolumeName\":\"\",\"deduplicationSpaceSaved\":{\"size\":0.0,\"unit\":\"Byte\"},\"isVserverRoot\":true,\"creationTime\":1498349284}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-AwdpsGpW",
+        "date": 1498353104662,
+        "actionName": "Describe SVMs",
+        "status": "Success",
+        "parameters": "{\"_cluster\":\"10.100.1.28\",\"_result\":[{\"svmType\":\"system\",\"svmState\":\"undefined\",\"allowedProtocols\":[],\"svmName\":\"Cluster\",\"language\":\"\",\"allowedAggregates\":[]},{\"svmType\":\"admin\",\"svmState\":\"undefined\",\"allowedProtocols\":[],\"svmName\":\"jgoodrum01\",\"language\":\"en_us\",\"allowedAggregates\":[]},{\"svmType\":\"node\",\"svmState\":\"undefined\",\"allowedProtocols\":[],\"svmName\":\"jgoodrum01-01\",\"language\":\"c\",\"allowedAggregates\":[]},{\"svmType\":\"data\",\"svmState\":\"running\",\"allowedProtocols\":[\"nfs\",\"cifs\",\"iscsi\"],\"svmName\":\"svm_jgoodrum01\",\"language\":\"c.utf_8\",\"allowedAggregates\":[\"aggr1\",\"aggr1_small\"]}]}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-dJWGUrDV",
+        "date": 1498353104606,
+        "actionName": "Describe Instance Status",
+        "status": "Success",
+        "parameters": "{\"instanceId\":\"i-0edccc1a4166e9493\",\"_region\":\"us-east-1\",\"_result\":{\"instanceId\":\"i-0edccc1a4166e9493\",\"status\":\"running\",\"instanceStatus\":\"ok\",\"systemStatus\":\"ok\"}}",
+        "errorMessage": null,
+        "count": 1
+    }, {
+        "id": "AuditGroupRecord$-tqBcDNXZ",
+        "date": 1498353104326,
+        "actionName": "Describe Instances With Filter",
+        "status": "Success",
+        "parameters": "{\"key\":\"tag:aws:cloudformation:stack-id\",\"value\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"_region\":\"us-east-1\",\"_result\":[{\"instanceId\":\"i-0edccc1a4166e9493\",\"name\":\"jgoodrum01\",\"publicDnsName\":\"\",\"keyPair\":null,\"state\":\"running\",\"vpcId\":\"vpc-07fa467e\",\"tags\":{\"Name\":\"jgoodrum01\",\"WorkingEnvironmentId\":\"VsaWorkingEnvironment-MB7prpQe\",\"aws:cloudformation:stack-name\":\"jgoodrum01\",\"aws:cloudformation:logical-id\":\"DotInstance\",\"aws:cloudformation:stack-id\":\"arn:aws:cloudformation:us-east-1:XXXXXXXXXXXX:stack/jgoodrum01/492eeef0-5939-11e7-b047-503acac41ed1\",\"WorkingEnvironment\":\"jgoodrum01\",\"CloudONTAP.serial-number\":\"902XXXXXXXXXXXX37211\"},\"publicIpAddress\":null,\"availabilityZone\":\"us-east-1b\",\"subnetId\":\"subnet-877f6ae2\",\"instanceType\":\"m4.xlarge\",\"privateDnsName\":\"ip-10-100-1-34.ec2.internal\",\"tenancy\":\"default\",\"imageId\":\"ami-b2b843a4\",\"ipAddress\":\"10.100.1.34\",\"productCodes\":[{\"productCodeId\":\"bk9ifwvjadm70j0qym0ui6msi\",\"productCodeType\":\"marketplace\"}],\"instanceProfileId\":null,\"privateIpAddress\":\"10.100.1.34\",\"devices\":[\"/dev/sda1\",\"/dev/xvdf\",\"/dev/xvdg\",\"/dev/xvdh\"]}]}",
+        "errorMessage": null,
+        "count": 1
+    }],
+    "errorMessage": null,
+    "version": "3.2.1",
+    "parentId": null,
+    "containsFailedRecords": false
+}]
