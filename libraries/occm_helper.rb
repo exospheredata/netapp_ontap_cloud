@@ -210,7 +210,12 @@ module Occm
         raise ArgumentError, "Authentication Failed due to invalid credentials: #{JSON.pretty_generate(rsp.body)}"
       when Net::HTTPBadRequest
         output = JSON.parse(rsp.body)
-        raise ArgumentError, "OnCommand Cloud Manager - Bad HTTP request error 400: #{output['message']}#{' - ' + output['violations'] if output['violations']}"
+        violation = nil
+        if output['violations']
+          violation = output['violations']
+          violation = violation.join('. ') if violation.is_a?(Array)
+        end
+        raise ArgumentError, "OnCommand Cloud Manager - Bad HTTP request error 400: #{output['message']}#{' - ' + violation if violation}"
       when Net::HTTPClientError,
             Net::HTTPInternalServerError
         raise "Unknown OCCM Server error: #{rsp.body.inspect}"
