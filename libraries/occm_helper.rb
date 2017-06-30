@@ -213,7 +213,17 @@ module Occm
         violation = nil
         if output['violations']
           violation = output['violations']
-          violation = violation.join('. ') if violation.is_a?(Array)
+          if violation.is_a?(Array)
+            if violation[0].is_a?(Hash)
+              violation_messages = ''
+              violation.each do |problem|
+                violation_messages += "#{problem['path']}: #{problem['message']} "
+              end
+              violation = violation_messages
+            else
+              violation = violation.join('. ')
+            end
+          end
         end
         raise ArgumentError, "OnCommand Cloud Manager - Bad HTTP request error 400: #{output['message']}#{' - ' + violation if violation}"
       when Net::HTTPClientError,

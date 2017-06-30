@@ -4,7 +4,7 @@ maintainer_email 'chef@exospheredata.com'
 license 'all_rights'
 description 'Manages NetApp OnCommand Cloud Manager and ONTAP Cloud'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version '1.6.0'
+version '1.6.1'
 chef_version '>= 12.5' if respond_to?(:chef_version)
 
 %w(debian ubuntu centos redhat amazon).each do |os|
