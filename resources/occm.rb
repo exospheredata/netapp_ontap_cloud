@@ -99,7 +99,13 @@ action :setup do
   # After configuring the OnCommand Cloud Manager setup and first-run, we need to wait for the service
   # to restart.  We are injecting a sleep function to capture a pause and ensure that we don't have a
   # race condition and check the status too early.
-  sleep(5)
+  #
+  # [2017-09-18] Due to a longer than expected delay to restart the service, we are bumping this sleep
+  # to 120 seconds from 5 seconds.  This should cover the time required to restart the service and prevent
+  # a race condition.  I attempted to test 60 delay but it seems that wasn't long enough.  The problem is
+  # apparently due to how long it takes for the service to shutdown completely when upgrading to 3.3.2 from
+  # the stock AMI 3.3.0.
+  sleep(120)
   server_responding?(new_resource.server, 5)
   new_resource.updated_by_last_action(true)
 end
